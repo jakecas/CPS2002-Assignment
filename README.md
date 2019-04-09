@@ -4,4 +4,4 @@ Owned by Jake Cassar and Pierre Zahra. A multiplayer treasure game for CPS2002 S
 ## Feature Branches
 
 ### Jenkins
-This branch was used to test that builds were triggered by post-commit hooks. Achieved by adding the URL to send the webhook to in github.
+This branch was used to set up the project and test the connection to jenkins, which polls this repository every 5 minutes.
