@@ -11,6 +11,6 @@ public class MainTest {
 
     @Test
     public void subtract_twoNumbers_failingTest() {
-        assertEquals("Testing subtract method with 5-3=8.", 8, Main.subtract(5,3), 0);
+        assertEquals("Testing subtract method with 5-3=2.", 2, Main.subtract(5,3), 0);
     }
 }
