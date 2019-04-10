@@ -16,11 +16,11 @@ public class MainTest {
 
     @Test
     public void multiply_twoNumbers_shouldBeMultiplied() {
-        assertEquals("Testing multiply method with 8*3=24.", 24, Main.add(8,3), 0);
+        assertEquals("Testing multiply method with 8*3=24.", 24, Main.multiply(8,3), 0);
     }
 
     @Test
     public void divide_twoNumbers_shouldBeDivided() {
-        assertEquals("Testing divide method with 10/5=2.", 2, Main.subtract(10,5), 0);
+        assertEquals("Testing divide method with 10/5=2.", 2, Main.divide(10,5), 0);
     }
 }
