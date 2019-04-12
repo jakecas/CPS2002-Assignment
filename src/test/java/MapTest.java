@@ -1,8 +1,7 @@
+import exceptions.PositionOutOfBoundsException;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.*;
 
@@ -10,12 +9,12 @@ public class MapTest {
     Map map;
 
     @Before
-    void setUp(){
+    public void setUp(){
         map = new Map();
     }
 
     @After
-    void tearDown() {
+    public void tearDown() {
         map = null;
     }
 
@@ -50,9 +49,7 @@ public class MapTest {
         map.setMapSize(5);
         map.generate();
         TileType tiles[][] = map.getTiles();
-        for(int i = 0; i < tiles.length; i++)
-            for(int j = 0; i < tiles[i].length; j++)
-                assertNotNull("Testing to see that map array at (" + i + ", " + j  +  ") isn't null", tiles[i][j]);
+        assertNotNull("Testing array of tiles is not null", tiles);
     }
 
     @Test
@@ -63,35 +60,10 @@ public class MapTest {
         assertEquals("Testing size of array is as intended", 25, tiles.length*tiles[0].length);
     }
 
-    @Rule
-    public final ExpectedException e = ExpectedException.none();
-
-    @Test
+    @Test(expected = PositionOutOfBoundsException.class)
     public void testGetTileType_nonExistingTile_throwsPositionOutOfBoundsException() {
         map.setMapSize(5);
-        e.expect(IndexOutOfBoundsException.class);
-        e.expectMessage("message");
         map.getTileType(8, 5);
     }
 
-    public static void main(String[] args) {
-        MapTest testing = new MapTest();
-
-        testing.setUp();
-
-        // Map size tests
-        testing.testSetMapSize_tooSmall_returnsFalse();
-        testing.testSetMapSize_tooSmallForLargeMap_returnsFalse();
-        testing.testSetMapSize_tooLarge_returnsFalse();
-        testing.testSetMapSize_correctSize_returnsTrue();
-
-        // Generate map tests
-        testing.testGenerate_notNull();
-        testing.testGenerate_checkNumberOfTiles();
-
-        // Tile type tests
-        testing.testGetTileType_nonExistingTile_throwsPositionOutOfBoundsException();
-
-        testing.tearDown();
-    }
 }
