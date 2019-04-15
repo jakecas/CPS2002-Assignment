@@ -1,3 +1,5 @@
+import enums.TileType;
+
 public class Map {
 
     private int size;
