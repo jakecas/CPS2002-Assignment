@@ -30,6 +30,10 @@ public class Map {
         this.isLarge = isLarge;
     }
 
+    public boolean getIsLarge(){
+        return isLarge;
+    }
+
     public TileType[][] getTiles(){
         return tiles;
     }

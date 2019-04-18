@@ -21,28 +21,28 @@ public class MapTest {
 
     @Test
     public void testSetMapSize_tooSmall_returnsFalse() {
-        assertEquals("Testing for a minimum map size 5x5", false, map.setMapSize(4));
+        assertFalse("Testing for a minimum map size 5x5", map.setMapSize(4));
     }
 
     @Test
     public void testSetMapSize_tooSmallForLargeMap_returnsFalse() {
         map.setIsLarge(true);
-        assertEquals("Testing for a minimum map size 8x8", false, map.setMapSize(7));
+        assertFalse("Testing for a minimum map size 8x8", map.setMapSize(7));
     }
 
     @Test
     public void testSetMapSize_tooLarge_returnsFalse(){
-        assertEquals("Testing for maximum map size 50x50", false, map.setMapSize(55));
+        assertFalse("Testing for maximum map size 50x50", map.setMapSize(55));
     }
 
     @Test
     public void testSetMapSize_correctSize_returnsTrue(){
-        assertEquals("Testing map size for size within limits", true, map.setMapSize(21));
-        assertEquals("Testing map size for size at lower limit small map", true, map.setMapSize(5));
-        assertEquals("Testing map size for size at upper limit", true, map.setMapSize(50));
+        assertTrue("Testing map size for size within limits", map.setMapSize(21));
+        assertTrue("Testing map size for size at lower limit small map", map.setMapSize(5));
+        assertTrue("Testing map size for size at upper limit", map.setMapSize(50));
 
         map.setIsLarge(true);
-        assertEquals("Testing map size for size at lower limit big map", true, map.setMapSize(8));
+        assertTrue("Testing map size for size at lower limit big map", map.setMapSize(8));
     }
 
     @Test
