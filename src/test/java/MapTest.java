@@ -64,7 +64,8 @@ public class MapTest {
     @Test(expected = PositionOutOfBoundsException.class)
     public void testGetTileType_nonExistingTile_throwsPositionOutOfBoundsException() {
         map.setMapSize(5);
-        map.getTileType(8, 5);
+        map.generate();
+        map.getTileType(new Position(8, 5));
     }
 
 }
