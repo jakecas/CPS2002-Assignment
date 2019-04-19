@@ -9,7 +9,7 @@ public class GameTest {
 
     @Before
     public void setUp(){
-        game = new Game(4);
+        game = new Game(4, 10);
     }
 
     @After
@@ -31,15 +31,15 @@ public class GameTest {
 
     @Test
     public void testSetMapSizeAfterSetNumPlayers_smallMap_returnsFalse(){
+        Map map = game.getMap();
         game.setNumPlayers(3);
-        Map map = new Map();
         assertFalse("Testing for small map creation", map.getIsLarge());
     }
 
     @Test
     public void testSetMapSizeAfterSetNumPlayers_largeMap_returnsTrue(){
+        Map map = game.getMap();
         game.setNumPlayers(5);
-        Map map = new Map();
-        assertTrue("Testing for small map creation", map.getIsLarge());
+        assertTrue("Testing for large map creation", map.getIsLarge());
     }
 }

@@ -29,8 +29,8 @@ public class Position {
     }
 
     public boolean isWithinLimit(int min, int max){
-        if(min < x && x < max){
-            return min < y && y < max;
+        if(min <= x && x < max){
+            return min <= y && y < max;
         }
         return false;
     }

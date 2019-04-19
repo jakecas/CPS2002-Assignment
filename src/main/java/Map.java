@@ -13,6 +13,10 @@ public class Map {
         isLarge = false;
     }
 
+    public int getMapSize(){
+        return size;
+    }
+
     public boolean setMapSize(int size) {
         if(size <= 50){
             if(size >= 8){
