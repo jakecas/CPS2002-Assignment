@@ -7,8 +7,8 @@ public class Game {
     private Player[] players;
     private Map map;
 
+    public void startGame(int numOfPlayers, int mapSize){
 
-    public Game(int numOfPlayers, int mapSize){
         turns = 0;
 
         map = new Map();
@@ -18,19 +18,14 @@ public class Game {
 
         setNumPlayers(numOfPlayers);
 
-        startGame();
-
-    }
-
-    public void startGame(){
-
         for (int i = 0; i < players.length; i++) {
             Position position;
             do {
                 position = Position.randomPosition(map.getMapSize());
-            }while (map.getTileType(position) != TileType.GRASS);
-
+            }while (map.getTile(position).getTileType() != TileType.GRASS);
+            System.out.println("Starting: " + position.getX() + ", " + position.getY());
             players[i] = new Player(position, map);
+            players[i].getMap().getTile(position).revealTile();
         }
 
         generateHTMLFiles();
@@ -65,6 +60,10 @@ public class Game {
         System.out.println("How large is the map? (5-50 for 2-4 players, 8-50 for 5-8 players)");
         int mapSize = input.nextInt();
 
-        Game game = new Game(playerCount, mapSize);
+        Game game = new Game();
+
+        game.startGame(playerCount, mapSize);
+
+//        System.out.println(game.getMap().generateHTML());
     }
 }

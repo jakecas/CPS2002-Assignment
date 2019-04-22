@@ -11,6 +11,10 @@ public class Player {
         this.map = map;
     }
 
+    public Map getMap(){
+        return map;
+    }
+
     public void move(Direction direction){
     }
 

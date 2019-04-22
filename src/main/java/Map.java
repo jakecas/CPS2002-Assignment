@@ -6,7 +6,7 @@ public class Map {
 
     private int size;
     private boolean isLarge;
-    private TileType[][] tiles;
+    private Tile[][] tiles;
 
     public Map() {
         size = -1;
@@ -38,7 +38,7 @@ public class Map {
         return isLarge;
     }
 
-    public TileType[][] getTiles(){
+    public Tile[][] getTiles(){
         return tiles;
     }
 
@@ -46,10 +46,10 @@ public class Map {
         if(size == -1){
             throw new MapSizeUndefinedException();
         }
-        tiles = new TileType[size][size];
+        tiles = new Tile[size][size];
         for(int i = 0; i < size; i++){
             for(int j = 0; j < size; j++){
-                tiles[i][j] = TileType.GRASS;
+                tiles[i][j] = new Tile(TileType.GRASS);
             }
         }
 
@@ -66,15 +66,15 @@ public class Map {
         }
 
         Position position = specialTiles[0];
-        tiles[position.getX()][position.getY()] = TileType.TREASURE;
+        tiles[position.getX()][position.getY()] = new Tile(TileType.TREASURE);
 
         for(int i = 1; i < specialTilesSize; i++){
             position = specialTiles[i];
-            tiles[position.getX()][position.getY()] = TileType.WATER;
+            tiles[position.getX()][position.getY()] = new Tile(TileType.WATER);
         }
     }
 
-    public TileType getTileType(Position position) {
+    public Tile getTile(Position position) {
         if(tiles == null || position == null){
             return null;
         }
@@ -84,4 +84,5 @@ public class Map {
 
         return tiles[position.getX()][position.getY()];
     }
+
 }
