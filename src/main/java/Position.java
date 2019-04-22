@@ -29,8 +29,17 @@ public class Position {
     }
 
     public boolean isWithinLimit(int min, int max){
-        if(min <= x && x < max){
-            return min <= y && y < max;
+        if(min <= x && x <= max){
+            return min <= y && y <= max;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if(obj != null && this.getClass() == obj.getClass()){
+            Position position = (Position)obj;
+            return this.x == position.getX() && this.y==position.getY();
         }
         return false;
     }
