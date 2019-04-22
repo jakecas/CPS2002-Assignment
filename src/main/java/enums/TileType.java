@@ -5,5 +5,13 @@ public enum TileType {
     WATER,
     TREASURE;
 
-    boolean isRevealed = false;
+    private boolean isRevealed = false;
+
+    public boolean isRevealed() {
+        return isRevealed;
+    }
+
+    public void revealTile() {
+        isRevealed = true;
+    }
 }

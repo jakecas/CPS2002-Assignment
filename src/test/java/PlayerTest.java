@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 
 public class PlayerTest {
     Player player;
+    Map map;
     Position position;
 
     @Before
@@ -40,8 +41,20 @@ public class PlayerTest {
     }
 
     @Test
-    public void testMove_southDirection_positionChanges(){
+    public void testMove_southDirection_positionMovesDown(){
+        Position newPosition = new Position(0, 1);
         player.move(Direction.SOUTH);
-        assertNotEquals("Checking position changed.", position, player.getPosition());
+        assertEquals("Checking position changed by.", newPosition, player.getPosition());
+    }
+
+    @Test
+    public void testMove_southDirection_positionIsRevealed(){
+        player.move(Direction.SOUTH);
+        assertTrue("Checking position changed by.", player.getMap().getTileType(player.getPosition()).isRevealed());
+    }
+
+    @Test(expected = PositionOutOfBoundsException.class)
+    public void testMove_northDirection_throwsException(){
+        player.move(Direction.NORTH);
     }
 }

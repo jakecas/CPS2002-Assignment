@@ -17,6 +17,11 @@ public class Position {
         return y;
     }
 
+    public void add(int x, int y){
+        this.x += x;
+        this.y += y;
+    }
+
     public static Position randomPosition(int max){
         Random rand = new Random();
         return new Position(rand.nextInt(max), rand.nextInt(max));

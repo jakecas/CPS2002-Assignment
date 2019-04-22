@@ -14,6 +14,19 @@ public class PositionTest {
     }
 
     @Test
+    public void testAdd_34addOrigin_positionUnchanged(){
+        Position temp = new Position(3,4);
+        position34.add(0, 0);
+        assertEquals("Checking that adding (0,0) to a position does not change it.", position34, temp);
+    }
+
+    @Test
+    public void testAdd_originAdd34_positionChanged(){
+        origin.add(3, 4);
+        assertEquals("Checking that adding (0,0) to a position does not change it.", origin, position34);
+    }
+
+    @Test
     public void testIsWithinLimits_withinLimits_returnsTrue(){
         assertTrue("Checking that position within the limits returns true.", position34.isWithinLimit(0,5));
     }
