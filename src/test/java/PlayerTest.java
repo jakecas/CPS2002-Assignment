@@ -7,14 +7,17 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class PlayerTest {
-    Player player;
-    Map map;
     Position position;
+    Map map;
+    Player player;
 
     @Before
     public void setUp() {
         position = new Position(0, 0);
-        player = new Player(position, new Map());
+        map = new Map();
+        map.setMapSize(5);
+        map.generate();
+        player = new Player(position, map);
     }
 
     @After
