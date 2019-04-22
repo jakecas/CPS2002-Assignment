@@ -2,6 +2,11 @@ import enums.TileType;
 import exceptions.MapSizeUndefinedException;
 import exceptions.PositionOutOfBoundsException;
 
+import java.io.*;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 public class Map {
 
     private int size;
@@ -83,6 +88,50 @@ public class Map {
         }
 
         return tiles[position.getX()][position.getY()];
+    }
+
+    public TileType getTileType(Position position){
+        return getTile(position).getTileType();
+    }
+
+    public String generateHTML(){
+        StringBuilder mapHTML = new StringBuilder();
+
+        URL resource = Game.class.getResource("map_prototype.html");
+        File file = new File(resource.getFile());
+
+        try {
+            String content = new String(Files.readAllBytes(file.toPath()));
+            mapHTML.append(content);
+        }catch (IOException e){
+            e.getMessage();
+            return "ERROR GENERATING HTML";
+        }
+
+        StringBuilder mapColumns = new StringBuilder();
+
+        for(int i = 0; i < size; i++)
+            mapColumns.append(" 50px");
+
+        String mapString = mapHTML.toString();
+        mapString = mapString.replace("$cpx", mapColumns.toString());
+
+
+        StringBuilder tilesHTML = new StringBuilder();
+        for (int row = 0; row < getMapSize(); row++) {
+
+            for (int col = 0; col < getMapSize(); col++) {
+                // Output as (column, row) to match (x, y) convention
+                if(tiles[col][row].isRevealed())
+                    tilesHTML.append("\t\t\t<div class=\"grid-item tile " + tiles[col][row].getTileType().getText() +"\">" + col + row + "</div>\n");
+                else
+                    tilesHTML.append("\t\t\t<div class=\"grid-item tile unknown\">" + col + row + "</div>\n");
+            }
+        }
+
+        mapString = mapString.replace("$tiles", tilesHTML.toString());
+
+        return mapString;
     }
 
 }

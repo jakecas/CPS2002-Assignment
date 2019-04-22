@@ -22,10 +22,15 @@ public class Game {
             Position position;
             do {
                 position = Position.randomPosition(map.getMapSize());
-            }while (map.getTile(position).getTileType() != TileType.GRASS);
+            }while (map.getTileType(position) != TileType.GRASS);
             System.out.println("Starting: " + position.getX() + ", " + position.getY());
             players[i] = new Player(position, map);
             players[i].getMap().getTile(position).revealTile();
+
+            String mapHTML = players[i].getMap().generateHTML();
+            mapHTML = mapHTML.replace("$pnum", String.valueOf(i+1));
+            mapHTML = mapHTML.replace("$tnum", String.valueOf(turns));
+            System.out.println(mapHTML);
         }
 
         generateHTMLFiles();
@@ -63,6 +68,8 @@ public class Game {
         Game game = new Game();
 
         game.startGame(playerCount, mapSize);
+
+
 
 //        System.out.println(game.getMap().generateHTML());
     }
