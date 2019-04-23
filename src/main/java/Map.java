@@ -116,6 +116,12 @@ public class Map {
         String mapString = mapHTML.toString();
         mapString = mapString.replace("$cpx", mapColumns.toString());
 
+        if(size > 25) {
+            mapString = mapString.replace("$bigFix", ".map{\n" + "\tposition: absolute;\n" + "}");
+        }
+        else{
+            mapString = mapString.replace("$bigFix", "\n");
+        }
 
         StringBuilder tilesHTML = new StringBuilder();
         for (int row = 0; row < getMapSize(); row++) {
@@ -123,9 +129,9 @@ public class Map {
             for (int col = 0; col < getMapSize(); col++) {
                 // Output as (column, row) to match (x, y) convention
                 if(tiles[col][row].isRevealed())
-                    tilesHTML.append("\t\t\t<div class=\"grid-item tile " + tiles[col][row].getTileType().getText() +"\">" + col + row + "</div>\n");
+                    tilesHTML.append("\t\t\t<div class=\"grid-item tile " + tiles[col][row].getTileType().getText() +"\">" + col + "," + row + "</div>\n");
                 else
-                    tilesHTML.append("\t\t\t<div class=\"grid-item tile unknown\">" + col + row + "</div>\n");
+                    tilesHTML.append("\t\t\t<div class=\"grid-item tile unknown\">" + col + "," + row + "</div>\n");
             }
         }
 

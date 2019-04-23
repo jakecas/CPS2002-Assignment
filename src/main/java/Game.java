@@ -1,10 +1,14 @@
 import enums.TileType;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Game {
     private int turns;
     private Player[] players;
+    private String[] mapHTML;
     private Map map;
 
     public void startGame(int numOfPlayers, int mapSize){
@@ -23,14 +27,15 @@ public class Game {
             do {
                 position = Position.randomPosition(map.getMapSize());
             }while (map.getTileType(position) != TileType.GRASS);
-            System.out.println("Starting: " + position.getX() + ", " + position.getY());
+
             players[i] = new Player(position, map);
             players[i].getMap().getTile(position).revealTile();
 
-            String mapHTML = players[i].getMap().generateHTML();
-            mapHTML = mapHTML.replace("$pnum", String.valueOf(i+1));
-            mapHTML = mapHTML.replace("$tnum", String.valueOf(turns));
-            System.out.println(mapHTML);
+            mapHTML[i] = players[i].getMap().generateHTML();
+            mapHTML[i] = mapHTML[i].replace("$pnum", String.valueOf(i+1));
+            mapHTML[i] = mapHTML[i].replace("$pnum", String.valueOf(i+1));
+            mapHTML[i] = mapHTML[i].replace("$tnum", String.valueOf(turns));
+
         }
 
         generateHTMLFiles();
@@ -39,6 +44,7 @@ public class Game {
     public boolean setNumPlayers(int n){
         if (n > 0 && n <= 8){
             players = new Player[n];
+            mapHTML = new String[n];
             map.setIsLarge(true);
             if (n <= 4)
                 map.setIsLarge(false);
@@ -50,6 +56,17 @@ public class Game {
     }
 
     public void generateHTMLFiles() {
+        String pathURL = Game.class.getResource("").getPath();
+        pathURL = pathURL.substring(1);
+        for(int i = 0; i < mapHTML.length; i++) {
+            try{
+                String player_map = "Player_Files/map_player_"+String.valueOf(i+1)+".html";
+                String path =  pathURL.replace("target/classes/", player_map);
+                Files.write(Paths.get(path), mapHTML[i].getBytes());
+            }catch (IOException e) {
+                e.getMessage();
+            }
+        }
 
     }
 
@@ -68,9 +85,5 @@ public class Game {
         Game game = new Game();
 
         game.startGame(playerCount, mapSize);
-
-
-
-//        System.out.println(game.getMap().generateHTML());
     }
 }

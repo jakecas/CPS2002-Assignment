@@ -3,19 +3,20 @@ html{
 	margin: 0;
 }
 
+header h1{
+	text-align: center;
+}
+
 body{
 	background-color: #e4e4e4;
 	padding: 0;
 	margin: 0;
-	position: fixed;
+	height: 100%;
+	width: 100%;
+	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-}
-
-/*Header*/
-header h1{
-	text-decoration: underline;
 }
 
 /*Map general*/
@@ -49,17 +50,17 @@ header h1{
 }
 
 .unknown{
-	background-color: #96a398;
+	background-color: grey;
 }
 
 .grass{
-	background-color: #06ad25;
+	background-color: green;
 }
 
 .water{
-	background-color: #0856d3;
+	background-color: blue;
 }
 
 .treasure{
-	background-color: #f4a907;
+	background-color: yellow;
 }
