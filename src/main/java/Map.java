@@ -1,4 +1,5 @@
 import enums.TileType;
+import exceptions.HTMLGenerationException;
 import exceptions.MapSizeUndefinedException;
 import exceptions.PositionOutOfBoundsException;
 
@@ -103,8 +104,7 @@ public class Map {
             String content = new String(Files.readAllBytes(file.toPath()));
             mapHTML.append(content);
         }catch (IOException e){
-            e.getMessage();
-            return "ERROR GENERATING HTML";
+            throw new HTMLGenerationException();
         }
 
         StringBuilder mapColumns = new StringBuilder();
