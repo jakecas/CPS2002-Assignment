@@ -25,4 +25,8 @@ public class Player {
     public Position getPosition() {
         return position;
     }
+
+    public String printMap(){
+       return map.generateHTML(position);
+    }
 }

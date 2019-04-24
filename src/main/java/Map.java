@@ -93,7 +93,7 @@ public class Map {
         return getTile(position).getTileType();
     }
 
-    public String generateHTML(){
+    public String generateHTML(Position position){
         StringBuilder mapHTML = new StringBuilder();
 
         URL resource = Game.class.getResource("map_prototype.html");
@@ -114,13 +114,13 @@ public class Map {
         }
 
         String mapString = mapHTML.toString();
-        mapString = mapString.replace("$cpx", mapColumns.toString());
+        mapString = mapString.replace("%cpx", mapColumns.toString());
 
         if(size > 25) {
-            mapString = mapString.replace("$bigFix", ".map{\n" + "\tposition: absolute;\n" + "}");
+            mapString = mapString.replace("%bigFix", ".map{\n" + "\tposition: absolute;\n" + "}");
         }
         else{
-            mapString = mapString.replace("$bigFix", "\n");
+            mapString = mapString.replace("%bigFix", "\n");
         }
 
         StringBuilder tilesHTML = new StringBuilder();
@@ -133,11 +133,17 @@ public class Map {
                 tilesHTML.append(String.valueOf(col));
                 tilesHTML.append(",");
                 tilesHTML.append(String.valueOf(row));
+
+                if (col == position.getX()){
+                    if (row == position.getY()) {
+                        tilesHTML.append("<p>P%pnum<p>");
+                    }
+                }
                 tilesHTML.append("</div>\n");
             }
         }
 
-        mapString = mapString.replace("$tiles", tilesHTML.toString());
+        mapString = mapString.replace("%tiles", tilesHTML.toString());
 
 
         return mapString;

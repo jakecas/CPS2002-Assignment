@@ -1,4 +1,5 @@
 import enums.TileType;
+import exceptions.HTMLGenerationException;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -53,14 +54,13 @@ public class Game {
     public void generateHTMLFiles() {
         for(int i = 0; i < players.length; i++) {
             try{
-                String mapHTML = players[i].getMap().generateHTML();
-                mapHTML = mapHTML.replace("$pnum", String.valueOf(i+1));
-                mapHTML = mapHTML.replace("$pnum", String.valueOf(i+1));
-                mapHTML = mapHTML.replace("$tnum", String.valueOf(turns));
+                String mapHTML = players[i].printMap();
+                mapHTML = mapHTML.replaceAll("%pnum", String.valueOf(i+1));
+                mapHTML = mapHTML.replace("%tnum", String.valueOf(turns));
 
                 Files.write(Paths.get("Player_Files/map_player_"+String.valueOf(i+1)+".html"), mapHTML.getBytes());
             }catch (IOException e) {
-                e.getMessage();
+                throw new HTMLGenerationException();
             }
         }
 
