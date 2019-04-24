@@ -19,4 +19,13 @@ public class Tile {
     public TileType getTileType(){
         return tileType;
     }
+
+    public String toHTML(){
+        if (isRevealed) {
+            return "\t\t\t<div class=\"grid-item tile " + tileType.getText();
+        }
+        else {
+            return "\t\t\t<div class=\"grid-item tile unknown";
+        }
+    }
 }

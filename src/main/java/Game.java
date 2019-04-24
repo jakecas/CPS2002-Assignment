@@ -8,7 +8,6 @@ import java.util.Scanner;
 public class Game {
     private int turns;
     private Player[] players;
-    private String[] mapHTML;
     private Map map;
 
     public void startGame(int numOfPlayers, int mapSize){
@@ -23,6 +22,7 @@ public class Game {
         setNumPlayers(numOfPlayers);
 
         for (int i = 0; i < players.length; i++) {
+
             Position position;
             do {
                 position = Position.randomPosition(map.getMapSize());
@@ -30,12 +30,6 @@ public class Game {
 
             players[i] = new Player(position, map);
             players[i].getMap().getTile(position).revealTile();
-
-            mapHTML[i] = players[i].getMap().generateHTML();
-            mapHTML[i] = mapHTML[i].replace("$pnum", String.valueOf(i+1));
-            mapHTML[i] = mapHTML[i].replace("$pnum", String.valueOf(i+1));
-            mapHTML[i] = mapHTML[i].replace("$tnum", String.valueOf(turns));
-
         }
 
         generateHTMLFiles();
@@ -44,10 +38,11 @@ public class Game {
     public boolean setNumPlayers(int n){
         if (n > 0 && n <= 8){
             players = new Player[n];
-            mapHTML = new String[n];
             map.setIsLarge(true);
-            if (n <= 4)
+
+            if (n <= 4) {
                 map.setIsLarge(false);
+            }
 
             return true;
         }
@@ -56,13 +51,14 @@ public class Game {
     }
 
     public void generateHTMLFiles() {
-        String pathURL = Game.class.getResource("").getPath();
-        pathURL = pathURL.substring(1);
-        for(int i = 0; i < mapHTML.length; i++) {
+        for(int i = 0; i < players.length; i++) {
             try{
-                String player_map = "Player_Files/map_player_"+String.valueOf(i+1)+".html";
-                String path =  pathURL.replace("target/classes/", player_map);
-                Files.write(Paths.get(path), mapHTML[i].getBytes());
+                String mapHTML = players[i].getMap().generateHTML();
+                mapHTML = mapHTML.replace("$pnum", String.valueOf(i+1));
+                mapHTML = mapHTML.replace("$pnum", String.valueOf(i+1));
+                mapHTML = mapHTML.replace("$tnum", String.valueOf(turns));
+
+                Files.write(Paths.get("Player_Files/map_player_"+String.valueOf(i+1)+".html"), mapHTML.getBytes());
             }catch (IOException e) {
                 e.getMessage();
             }
