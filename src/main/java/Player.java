@@ -11,6 +11,10 @@ public class Player {
         this.map = map;
     }
 
+    public Map getMap(){
+        return map;
+    }
+
     public void move(Direction direction){
     }
 
@@ -20,5 +24,9 @@ public class Player {
 
     public Position getPosition() {
         return position;
+    }
+
+    public String printMap(){
+       return map.generateHTML(position);
     }
 }
