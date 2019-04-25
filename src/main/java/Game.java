@@ -1,6 +1,7 @@
 import enums.Direction;
 import enums.TileType;
 import exceptions.HTMLGenerationException;
+import exceptions.PositionOutOfBoundsException;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -109,26 +110,34 @@ public class Game {
                 System.out.println("2. South");
                 System.out.println("3. East");
                 System.out.println("4. West");
-                switch (input.nextInt()){
-                    case 1:
-                        player.move(Direction.NORTH);
-                        break;
-                    case 2:
-                        player.move(Direction.SOUTH);
-                        break;
-                    case 3:
-                        player.move(Direction.EAST);
-                        break;
-                    case 4:
-                        player.move(Direction.WEST);
-                        break;
-                    default:
-                        System.out.println("Invalid direction, please try again.");
+                try{
+                    switch (input.nextInt()){
+                        case 1:
+                            player.move(Direction.NORTH);
+                            break;
+                        case 2:
+                            player.move(Direction.SOUTH);
+                            break;
+                        case 3:
+                            player.move(Direction.EAST);
+                            break;
+                        case 4:
+                            player.move(Direction.WEST);
+                            break;
+                        default:
+                            System.out.println("Invalid direction, please try again.");
+                    }
+                } catch (PositionOutOfBoundsException e){
+                    System.out.println("Destination is outside of map for player "+i--+", please try again.");
                 }
+
                 if(map.getTileType(player.getPosition()) == TileType.TREASURE){
                     win = true;
+                } else if (map.getTileType(player.getPosition()) == TileType.WATER){
+                    player.resetToInitialPosition();
                 }
             }
+            turns++;
             generateHTMLFiles();
         } while(!win);
     }

@@ -7,7 +7,7 @@ public class Player {
     private Map map;
 
     public Player(Position position, Map map){
-        this.initialPosition = position;
+        this.initialPosition = new Position(position.getX(), position.getY());
         this.position = position;
         this.map = map;
     }
@@ -32,7 +32,8 @@ public class Player {
                 position.add(-1,0);
                 break;
         }
-        if(!position.isWithinLimit(0, map.getMapSize())){
+        if(!position.isWithinLimit(0, map.getMapSize()-1)){
+            // Undoing the movement and throwing an exception.
             position = temp;
             throw new PositionOutOfBoundsException();
         }
@@ -52,5 +53,9 @@ public class Player {
 
     public String printMap(){
        return map.generateHTML(position);
+    }
+
+    public void resetToInitialPosition() {
+        position = initialPosition;
     }
 }
