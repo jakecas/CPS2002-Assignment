@@ -14,5 +14,4 @@ public enum TileType {
     public String getText(){
         return text;
     }
-
 }

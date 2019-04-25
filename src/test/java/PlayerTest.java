@@ -7,13 +7,17 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class PlayerTest {
-    Player player;
     Position position;
+    Map map;
+    Player player;
 
     @Before
     public void setUp() {
         position = new Position(0, 0);
-        player = new Player(position, new Map());
+        map = new Map();
+        map.setMapSize(5);
+        map.generate();
+        player = new Player(position, map);
     }
 
     @After
@@ -40,8 +44,20 @@ public class PlayerTest {
     }
 
     @Test
-    public void testMove_southDirection_positionChanges(){
+    public void testMove_southDirection_positionMovesDown(){
+        Position newPosition = new Position(0, 1);
         player.move(Direction.SOUTH);
-        assertNotEquals("Checking position changed.", position, player.getPosition());
+        assertEquals("Checking position changed by.", newPosition, player.getPosition());
+    }
+
+    @Test
+    public void testMove_southDirection_positionIsRevealed(){
+        player.move(Direction.SOUTH);
+        assertTrue("Checking position changed by.", player.getMap().getTile(player.getPosition()).isRevealed());
+    }
+
+    @Test(expected = PositionOutOfBoundsException.class)
+    public void testMove_northDirection_throwsException(){
+        player.move(Direction.NORTH);
     }
 }

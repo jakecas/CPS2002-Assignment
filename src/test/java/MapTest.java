@@ -1,4 +1,3 @@
-import enums.TileType;
 import exceptions.PositionOutOfBoundsException;
 import org.junit.After;
 import org.junit.Before;
