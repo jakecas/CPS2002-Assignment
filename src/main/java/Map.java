@@ -1,12 +1,17 @@
 import enums.TileType;
+import exceptions.HTMLGenerationException;
 import exceptions.MapSizeUndefinedException;
 import exceptions.PositionOutOfBoundsException;
+
+import java.io.*;
+import java.net.URL;
+import java.nio.file.Files;
 
 public class Map {
 
     private int size;
     private boolean isLarge;
-    private TileType[][] tiles;
+    private Tile[][] tiles;
 
     public Map() {
         size = -1;
@@ -38,7 +43,7 @@ public class Map {
         return isLarge;
     }
 
-    public TileType[][] getTiles(){
+    public Tile[][] getTiles(){
         return tiles;
     }
 
@@ -46,10 +51,10 @@ public class Map {
         if(size == -1){
             throw new MapSizeUndefinedException();
         }
-        tiles = new TileType[size][size];
+        tiles = new Tile[size][size];
         for(int i = 0; i < size; i++){
             for(int j = 0; j < size; j++){
-                tiles[i][j] = TileType.GRASS;
+                tiles[i][j] = new Tile(TileType.GRASS);
             }
         }
 
@@ -66,15 +71,15 @@ public class Map {
         }
 
         Position position = specialTiles[0];
-        tiles[position.getX()][position.getY()] = TileType.TREASURE;
+        tiles[position.getX()][position.getY()] = new Tile(TileType.TREASURE);
 
         for(int i = 1; i < specialTilesSize; i++){
             position = specialTiles[i];
-            tiles[position.getX()][position.getY()] = TileType.WATER;
+            tiles[position.getX()][position.getY()] = new Tile(TileType.WATER);
         }
     }
 
-    public TileType getTileType(Position position) {
+    public Tile getTile(Position position) {
         if(tiles == null || position == null){
             return null;
         }
@@ -84,4 +89,64 @@ public class Map {
 
         return tiles[position.getX()][position.getY()];
     }
+
+    public TileType getTileType(Position position){
+        return getTile(position).getTileType();
+    }
+
+    public String generateHTML(Position position){
+        StringBuilder mapHTML = new StringBuilder();
+
+        URL resource = Game.class.getResource("map_prototype.html");
+        File file = new File(resource.getFile());
+
+        try {
+            String content = new String(Files.readAllBytes(file.toPath()));
+            mapHTML.append(content);
+        }catch (IOException e){
+            throw new HTMLGenerationException();
+        }
+
+        StringBuilder mapColumns = new StringBuilder();
+
+        for(int i = 0; i < size; i++) {
+            mapColumns.append(" 50px");
+        }
+
+        String mapString = mapHTML.toString();
+        mapString = mapString.replace("%cpx", mapColumns.toString());
+
+        if(size > 25) {
+            mapString = mapString.replace("%bigFix", ".map{\n" + "\tposition: absolute;\n" + "}");
+        }
+        else{
+            mapString = mapString.replace("%bigFix", "\n");
+        }
+
+        StringBuilder tilesHTML = new StringBuilder();
+        for (int row = 0; row < getMapSize(); row++) {
+
+            for (int col = 0; col < getMapSize(); col++) {
+                // Output as (column, row) to match (x, y) convention
+                tilesHTML.append(tiles[col][row].toHTML());
+                tilesHTML.append( "\">");
+                tilesHTML.append(String.valueOf(col));
+                tilesHTML.append(",");
+                tilesHTML.append(String.valueOf(row));
+
+                if (col == position.getX()){
+                    if (row == position.getY()) {
+                        tilesHTML.append("<p>P%pnum<p>");
+                    }
+                }
+                tilesHTML.append("</div>\n");
+            }
+        }
+
+        mapString = mapString.replace("%tiles", tilesHTML.toString());
+
+
+        return mapString;
+    }
+
 }

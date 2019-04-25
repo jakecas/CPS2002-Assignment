@@ -1,17 +1,17 @@
 package enums;
 
 public enum TileType {
-    GRASS,
-    WATER,
-    TREASURE;
+    GRASS("grass"),
+    WATER("water"),
+    TREASURE("treasure");
 
-    private boolean isRevealed = false;
+    String text;
 
-    public boolean isRevealed() {
-        return isRevealed;
+    TileType(String text){
+        this.text = text;
     }
 
-    public void revealTile() {
-        isRevealed = true;
+    public String getText(){
+        return text;
     }
 }

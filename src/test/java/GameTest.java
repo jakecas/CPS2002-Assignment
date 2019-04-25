@@ -9,7 +9,8 @@ public class GameTest {
 
     @Before
     public void setUp(){
-        game = new Game(4, 10);
+        game = new Game();
+        game.startGame(4, 5);
     }
 
     @After

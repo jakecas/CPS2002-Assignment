@@ -1,5 +1,4 @@
 import enums.Direction;
-import enums.TileType;
 import exceptions.PositionOutOfBoundsException;
 
 public class Player {
@@ -37,7 +36,7 @@ public class Player {
             position = temp;
             throw new PositionOutOfBoundsException();
         }
-        map.getTileType(position).revealTile();
+        map.getTile(position).revealTile();
     }
 
     public void setPosition(Position position) {
@@ -49,5 +48,9 @@ public class Player {
 
     public Position getPosition() {
         return position;
+    }
+
+    public String printMap(){
+       return map.generateHTML(position);
     }
 }
