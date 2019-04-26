@@ -51,6 +51,10 @@ public class Player {
         return position;
     }
 
+    public Position getInitialPosition() {
+        return initialPosition;
+    }
+
     public String printMap(){
        return map.generateHTML(position);
     }

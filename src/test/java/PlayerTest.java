@@ -56,8 +56,19 @@ public class PlayerTest {
         assertTrue("Checking position changed by.", player.getMap().getTile(player.getPosition()).isRevealed());
     }
 
+    @Test
+    public void testResetToInitialPosition_afterMovement_positionIsReset(){
+        player.move(Direction.EAST);
+        player.move(Direction.SOUTH);
+        player.move(Direction.SOUTH);
+        player.move(Direction.WEST);
+        assertNotEquals("Checking position is not equal to origin before reset.", player.getPosition(), player.getInitialPosition());
+        player.resetToInitialPosition();
+        assertEquals("Checking position is reset to origin.", player.getPosition(), player.getInitialPosition() );
+    }
+
     @Test(expected = PositionOutOfBoundsException.class)
-    public void testMove_northDirection_throwsException(){
+    public void testMove_illegalNorthDirection_throwsException(){
         player.move(Direction.NORTH);
     }
 }

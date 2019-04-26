@@ -1,3 +1,4 @@
+import exceptions.MapSizeUndefinedException;
 import exceptions.PositionOutOfBoundsException;
 import org.junit.After;
 import org.junit.Before;
@@ -60,11 +61,23 @@ public class MapTest {
         assertEquals("Testing size of array is as intended", 25, tiles.length*tiles[0].length);
     }
 
+    @Test(expected = MapSizeUndefinedException.class)
+    public void testGenerate_sizeUndefined_throwsException(){
+        map.generate(map.generateSeed());
+    }
+
     @Test(expected = PositionOutOfBoundsException.class)
-    public void testGetTileType_nonExistingTile_throwsPositionOutOfBoundsException() {
+    public void testGetTile_nonExistingTile_throwsPositionOutOfBoundsException() {
         map.setMapSize(5);
         map.generate(map.generateSeed());
         map.getTile(new Position(8, 5));
+    }
+
+    @Test
+    public void testGetTile_nullPosition_returnsNull() {
+        map.setMapSize(5);
+        map.generate(map.generateSeed());
+        assertNull("Asserting that getTile returns null when parameter is null", map.getTile(null));
     }
 
 }

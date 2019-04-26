@@ -47,4 +47,9 @@ public class PositionTest {
         Position origin2 = new Position(0, 0);
         assertEquals("Checking positions (0,0) are equal.", origin, origin2);
     }
+
+    @Test
+    public void testEquals_diffPosition_returnsFalse(){
+        assertNotEquals("Checking positions (0,0) and (3,4) are unequal.", origin, position34);
+    }
 }

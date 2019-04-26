@@ -43,7 +43,6 @@ public class Game {
             players[i].getMap().getTile(position).revealTile();
         }
 
-        generateHTMLFiles();
     }
 
     public static boolean setNumPlayers(int n){
@@ -92,7 +91,7 @@ public class Game {
 
     }
 
-    public Map getMap(){
+    public static Map getMap(){
         return map;
     }
 
@@ -145,6 +144,7 @@ public class Game {
         int mapSize = input.nextInt();
 
         startGame(playerCount, mapSize);
+        generateHTMLFiles();
 
         boolean win = false;
         boolean[] winners = new boolean[playerCount];
