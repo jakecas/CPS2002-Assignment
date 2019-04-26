@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Game {
@@ -22,18 +23,23 @@ public class Game {
         map = new Map();
 
         map.setMapSize(mapSize);
-        map.generate();
+        char[][] seed = map.generateSeed();
+        map.generate(seed);
 
         setNumPlayers(numOfPlayers);
 
         for (int i = 0; i < players.length; i++) {
+            Map playerMap = new Map();
+            playerMap.setMapSize(mapSize);
+            playerMap.generate(seed);
 
             Position position;
             do {
                 position = Position.randomPosition(map.getMapSize());
-            }while (map.getTileType(position) != TileType.GRASS);
+            }while (playerMap.getTileType(position) != TileType.GRASS);
 
-            players[i] = new Player(position, map);
+
+            players[i] = new Player(position, playerMap);
             players[i].getMap().getTile(position).revealTile();
         }
 
@@ -101,6 +107,7 @@ public class Game {
         startGame(playerCount, mapSize);
 
         boolean win = false;
+        boolean[] winners = new boolean[playerCount];
 
         do {
             for(int i = 0; i < playerCount; i++){
@@ -125,14 +132,18 @@ public class Game {
                             player.move(Direction.WEST);
                             break;
                         default:
-                            System.out.println("Invalid direction, please try again.");
+                            System.out.println("Invalid direction for Player " + (i-- + 1) + ", please try again.");
                     }
                 } catch (PositionOutOfBoundsException e){
-                    System.out.println("Destination is outside of map for player "+i--+", please try again.");
+                    System.out.println("Destination is outside of map for Player " + (i-- + 1) + ", please try again.");
+                } catch (InputMismatchException e){
+                    System.out.println("Unrecognised input for Player " + (i-- + 1)+ ", please try again.");
+                    input.nextLine(); // Clear buffer
                 }
 
                 if(map.getTileType(player.getPosition()) == TileType.TREASURE){
                     win = true;
+                    winners[i] = true;
                 } else if (map.getTileType(player.getPosition()) == TileType.WATER){
                     player.resetToInitialPosition();
                 }
@@ -140,5 +151,11 @@ public class Game {
             turns++;
             generateHTMLFiles();
         } while(!win);
+
+        for (int i = 0; i < playerCount; i++) {
+            if(winners[i] == true){
+                System.out.println("Congratulations! Player " + (i+1) + " found the treasure!");
+            }
+        }
     }
 }

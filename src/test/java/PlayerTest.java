@@ -16,7 +16,7 @@ public class PlayerTest {
         position = new Position(0, 0);
         map = new Map();
         map.setMapSize(5);
-        map.generate();
+        map.generate(map.generateSeed());
         player = new Player(position, map);
     }
 

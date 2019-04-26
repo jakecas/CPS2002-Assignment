@@ -47,7 +47,7 @@ public class MapTest {
     @Test
     public void testGenerate_notNull(){
         map.setMapSize(5);
-        map.generate();
+        map.generate(map.generateSeed());
         Tile tiles[][] = map.getTiles();
         assertNotNull("Testing array of tiles is not null", tiles);
     }
@@ -55,7 +55,7 @@ public class MapTest {
     @Test
     public void testGenerate_checkNumberOfTiles(){
         map.setMapSize(5);
-        map.generate();
+        map.generate(map.generateSeed());
         Tile tiles[][] = map.getTiles();
         assertEquals("Testing size of array is as intended", 25, tiles.length*tiles[0].length);
     }
@@ -63,7 +63,7 @@ public class MapTest {
     @Test(expected = PositionOutOfBoundsException.class)
     public void testGetTileType_nonExistingTile_throwsPositionOutOfBoundsException() {
         map.setMapSize(5);
-        map.generate();
+        map.generate(map.generateSeed());
         map.getTile(new Position(8, 5));
     }
 
