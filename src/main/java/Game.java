@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Game {
@@ -22,18 +23,23 @@ public class Game {
         map = new Map();
 
         map.setMapSize(mapSize);
-        map.generate();
+        char[][] seed = map.generateSeed();
+        map.generate(seed);
 
         setNumPlayers(numOfPlayers);
 
         for (int i = 0; i < players.length; i++) {
+            Map playerMap = new Map();
+            playerMap.setMapSize(mapSize);
+            playerMap.generate(seed);
 
             Position position;
             do {
                 position = Position.randomPosition(map.getMapSize());
-            }while (map.getTileType(position) != TileType.GRASS);
+            }while (playerMap.getTileType(position) != TileType.GRASS);
 
-            players[i] = new Player(position, map);
+
+            players[i] = new Player(position, playerMap);
             players[i].getMap().getTile(position).revealTile();
         }
 
@@ -90,6 +96,46 @@ public class Game {
         return map;
     }
 
+    public static boolean menu(Player player, int playerNum){
+        boolean valid = false;
+        Scanner input = new Scanner(System.in);
+        System.out.println("Player " + (playerNum+1) + "; Choose a direction:");
+        System.out.println("1. North");
+        System.out.println("2. South");
+        System.out.println("3. East");
+        System.out.println("4. West");
+        try{
+            int choice = 0;
+            choice = input.nextInt();
+            valid = true;
+            switch (choice) {
+                case 1:
+                    player.move(Direction.NORTH);
+                    break;
+                case 2:
+                    player.move(Direction.SOUTH);
+                    break;
+                case 3:
+                    player.move(Direction.EAST);
+                    break;
+                case 4:
+                    player.move(Direction.WEST);
+                    break;
+                default:
+                    System.out.println("Invalid direction for Player " + (playerNum + 1) + ", please try again.");
+                    valid = false;
+            }
+        }catch (PositionOutOfBoundsException e){
+            System.out.println("Destination is outside of map for Player " + (playerNum + 1) + ", please try again.");
+            valid = false;
+        }catch (InputMismatchException e){
+            System.out.println("Unrecognised input for Player " + (playerNum + 1)
+                    + ", integer required. Please try again.");
+            input.nextLine();
+        }
+        return valid;
+    }
+
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
@@ -101,44 +147,32 @@ public class Game {
         startGame(playerCount, mapSize);
 
         boolean win = false;
+        boolean[] winners = new boolean[playerCount];
 
         do {
             for(int i = 0; i < playerCount; i++){
                 Player player = players[i];
-                System.out.println("Player " + (i+1) + "; Choose a direction:");
-                System.out.println("1. North");
-                System.out.println("2. South");
-                System.out.println("3. East");
-                System.out.println("4. West");
-                try{
-                    switch (input.nextInt()){
-                        case 1:
-                            player.move(Direction.NORTH);
-                            break;
-                        case 2:
-                            player.move(Direction.SOUTH);
-                            break;
-                        case 3:
-                            player.move(Direction.EAST);
-                            break;
-                        case 4:
-                            player.move(Direction.WEST);
-                            break;
-                        default:
-                            System.out.println("Invalid direction, please try again.");
-                    }
-                } catch (PositionOutOfBoundsException e){
-                    System.out.println("Destination is outside of map for player "+i--+", please try again.");
+                boolean valid = false;
+                while(!valid){
+                    valid = menu(player, i);
                 }
 
                 if(map.getTileType(player.getPosition()) == TileType.TREASURE){
                     win = true;
+                    winners[i] = true;
                 } else if (map.getTileType(player.getPosition()) == TileType.WATER){
+                    System.out.println("Player " + (i+1) + " drowned!");
                     player.resetToInitialPosition();
                 }
             }
             turns++;
             generateHTMLFiles();
         } while(!win);
+
+        for (int i = 0; i < playerCount; i++) {
+            if(winners[i] == true){
+                System.out.println("Congratulations! Player " + (i+1) + " found the treasure!");
+            }
+        }
     }
 }

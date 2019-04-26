@@ -47,14 +47,14 @@ public class Map {
         return tiles;
     }
 
-    public void generate() {
+    public char[][] generateSeed() {
         if(size == -1){
             throw new MapSizeUndefinedException();
         }
-        tiles = new Tile[size][size];
+        char[][] tiles = new char[size][size];
         for(int i = 0; i < size; i++){
             for(int j = 0; j < size; j++){
-                tiles[i][j] = new Tile(TileType.GRASS);
+                tiles[i][j] = 'g';
             }
         }
 
@@ -71,11 +71,30 @@ public class Map {
         }
 
         Position position = specialTiles[0];
-        tiles[position.getX()][position.getY()] = new Tile(TileType.TREASURE);
+        tiles[position.getX()][position.getY()] = 't';
 
         for(int i = 1; i < specialTilesSize; i++){
             position = specialTiles[i];
-            tiles[position.getX()][position.getY()] = new Tile(TileType.WATER);
+            tiles[position.getX()][position.getY()] = 'w';
+        }
+
+        return tiles;
+    }
+
+    public void generate(char[][] seed){
+        tiles = new Tile[size][size];
+        for(int i = 0; i < size; i++){
+            for(int j = 0; j < size; j++){
+                if(seed[i][j] == 'g'){
+                    tiles[i][j] = new Tile(TileType.GRASS);
+                }
+                else if(seed[i][j] == 'w'){
+                    tiles[i][j] = new Tile(TileType.WATER);
+                }
+                else if(seed[i][j] == 't') {
+                    tiles[i][j] = new Tile(TileType.TREASURE);
+                }
+            }
         }
     }
 
