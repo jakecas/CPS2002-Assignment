@@ -96,6 +96,48 @@ public class Game {
         return map;
     }
 
+    public static boolean menu(Player player, int playerNum){
+        boolean valid = false;
+        Scanner input = new Scanner(System.in);
+        System.out.println("Player " + (playerNum+1) + "; Choose a direction:");
+        System.out.println("1. North");
+        System.out.println("2. South");
+        System.out.println("3. East");
+        System.out.println("4. West");
+        try{
+            int choice = 0;
+            try{
+                choice = input.nextInt();
+                valid = true;
+                switch (choice) {
+                    case 1:
+                        player.move(Direction.NORTH);
+                        break;
+                    case 2:
+                        player.move(Direction.SOUTH);
+                        break;
+                    case 3:
+                        player.move(Direction.EAST);
+                        break;
+                    case 4:
+                        player.move(Direction.WEST);
+                        break;
+                    default:
+                        System.out.println("Invalid direction for Player " + (playerNum + 1) + ", please try again.");
+                        valid = false;
+                }
+            }catch (InputMismatchException e){
+                System.out.println("Unrecognised input for Player " + (playerNum + 1)
+                        + ", integer required. Please try again.");
+                input.nextLine();
+            }
+        } catch (PositionOutOfBoundsException e){
+            System.out.println("Destination is outside of map for Player " + (playerNum + 1) + ", please try again.");
+            valid = false;
+        }
+        return valid;
+    }
+
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
@@ -112,39 +154,16 @@ public class Game {
         do {
             for(int i = 0; i < playerCount; i++){
                 Player player = players[i];
-                System.out.println("Player " + (i+1) + "; Choose a direction:");
-                System.out.println("1. North");
-                System.out.println("2. South");
-                System.out.println("3. East");
-                System.out.println("4. West");
-                try{
-                    switch (input.nextInt()){
-                        case 1:
-                            player.move(Direction.NORTH);
-                            break;
-                        case 2:
-                            player.move(Direction.SOUTH);
-                            break;
-                        case 3:
-                            player.move(Direction.EAST);
-                            break;
-                        case 4:
-                            player.move(Direction.WEST);
-                            break;
-                        default:
-                            System.out.println("Invalid direction for Player " + (i-- + 1) + ", please try again.");
-                    }
-                } catch (PositionOutOfBoundsException e){
-                    System.out.println("Destination is outside of map for Player " + (i-- + 1) + ", please try again.");
-                } catch (InputMismatchException e){
-                    System.out.println("Unrecognised input for Player " + (i-- + 1)+ ", please try again.");
-                    input.nextLine(); // Clear buffer
+                boolean valid = false;
+                while(!valid){
+                    valid = menu(player, i);
                 }
 
                 if(map.getTileType(player.getPosition()) == TileType.TREASURE){
                     win = true;
                     winners[i] = true;
                 } else if (map.getTileType(player.getPosition()) == TileType.WATER){
+                    System.out.println("Player " + (i+1) + " drowned!");
                     player.resetToInitialPosition();
                 }
             }
