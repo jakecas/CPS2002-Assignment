@@ -106,34 +106,32 @@ public class Game {
         System.out.println("4. West");
         try{
             int choice = 0;
-            try{
-                choice = input.nextInt();
-                valid = true;
-                switch (choice) {
-                    case 1:
-                        player.move(Direction.NORTH);
-                        break;
-                    case 2:
-                        player.move(Direction.SOUTH);
-                        break;
-                    case 3:
-                        player.move(Direction.EAST);
-                        break;
-                    case 4:
-                        player.move(Direction.WEST);
-                        break;
-                    default:
-                        System.out.println("Invalid direction for Player " + (playerNum + 1) + ", please try again.");
-                        valid = false;
-                }
-            }catch (InputMismatchException e){
-                System.out.println("Unrecognised input for Player " + (playerNum + 1)
-                        + ", integer required. Please try again.");
-                input.nextLine();
+            choice = input.nextInt();
+            valid = true;
+            switch (choice) {
+                case 1:
+                    player.move(Direction.NORTH);
+                    break;
+                case 2:
+                    player.move(Direction.SOUTH);
+                    break;
+                case 3:
+                    player.move(Direction.EAST);
+                    break;
+                case 4:
+                    player.move(Direction.WEST);
+                    break;
+                default:
+                    System.out.println("Invalid direction for Player " + (playerNum + 1) + ", please try again.");
+                    valid = false;
             }
-        } catch (PositionOutOfBoundsException e){
+        }catch (PositionOutOfBoundsException e){
             System.out.println("Destination is outside of map for Player " + (playerNum + 1) + ", please try again.");
             valid = false;
+        }catch (InputMismatchException e){
+            System.out.println("Unrecognised input for Player " + (playerNum + 1)
+                    + ", integer required. Please try again.");
+            input.nextLine();
         }
         return valid;
     }
