@@ -88,11 +88,14 @@ public class Game {
                 throw new HTMLGenerationException();
             }
         }
-
     }
 
     public static Map getMap(){
         return map;
+    }
+
+    public static Player[] getPlayers(){
+        return players;
     }
 
     public static boolean menu(Player player, int playerNum){
