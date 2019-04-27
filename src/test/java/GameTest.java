@@ -1,13 +1,9 @@
-import enums.Direction;
-import exceptions.PositionOutOfBoundsException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.math.BigInteger;
-import java.nio.ByteBuffer;
 import java.nio.file.Paths;
 
 import static org.junit.Assert.*;
