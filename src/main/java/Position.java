@@ -48,4 +48,9 @@ public class Position {
         }
         return false;
     }
+
+    @Override
+    public String toString(){
+        return "(" + this.x + "," + this.y + ")";
+    }
 }
