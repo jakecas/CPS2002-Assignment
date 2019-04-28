@@ -43,7 +43,6 @@ public class Game {
             players[i].getMap().getTile(position).revealTile();
         }
 
-        generateHTMLFiles();
     }
 
     public static boolean setNumPlayers(int n){
@@ -89,11 +88,14 @@ public class Game {
                 throw new HTMLGenerationException();
             }
         }
-
     }
 
-    public Map getMap(){
+    public static Map getMap(){
         return map;
+    }
+
+    public static Player[] getPlayers(){
+        return players;
     }
 
     public static boolean menu(Player player, int playerNum){
@@ -145,6 +147,7 @@ public class Game {
         int mapSize = input.nextInt();
 
         startGame(playerCount, mapSize);
+        generateHTMLFiles();
 
         boolean win = false;
         boolean[] winners = new boolean[playerCount];

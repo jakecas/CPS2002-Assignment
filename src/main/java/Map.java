@@ -149,9 +149,9 @@ public class Map {
                 // Output as (column, row) to match (x, y) convention
                 tilesHTML.append(tiles[col][row].toHTML());
                 tilesHTML.append( "\">");
-                tilesHTML.append(String.valueOf(col));
+                tilesHTML.append(col);
                 tilesHTML.append(",");
-                tilesHTML.append(String.valueOf(row));
+                tilesHTML.append(row);
 
                 if (col == position.getX()){
                     if (row == position.getY()) {
