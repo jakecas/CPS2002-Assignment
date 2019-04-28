@@ -35,14 +35,14 @@ public class Player {
         if(!position.isWithinLimit(0, map.getMapSize()-1)){
             // Undoing the movement and throwing an exception.
             position = temp;
-            throw new PositionOutOfBoundsException();
+            throw new PositionOutOfBoundsException(position.toString());
         }
         map.getTile(position).revealTile();
     }
 
     public void setPosition(Position position) {
         if(!position.isWithinLimit(0, map.getMapSize())){
-            throw new PositionOutOfBoundsException();
+            throw new PositionOutOfBoundsException(position.toString());
         }
         this.position = position;
     }

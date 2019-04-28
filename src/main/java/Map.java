@@ -49,7 +49,7 @@ public class Map {
 
     public char[][] generateSeed() {
         if(size == -1){
-            throw new MapSizeUndefinedException();
+            throw new MapSizeUndefinedException("Generating Seed");
         }
         char[][] tiles = new char[size][size];
         for(int i = 0; i < size; i++){
@@ -103,7 +103,7 @@ public class Map {
             return null;
         }
         if(!position.isWithinLimit(0, size)){
-            throw new PositionOutOfBoundsException();
+            throw new PositionOutOfBoundsException(position.toString());
         }
 
         return tiles[position.getX()][position.getY()];
@@ -123,7 +123,7 @@ public class Map {
             String content = new String(Files.readAllBytes(file.toPath()));
             mapHTML.append(content);
         }catch (IOException e){
-            throw new HTMLGenerationException();
+            throw new HTMLGenerationException(e.getMessage());
         }
 
         StringBuilder mapColumns = new StringBuilder();

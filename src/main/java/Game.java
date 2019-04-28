@@ -75,7 +75,7 @@ public class Game {
         try {
             generateDirectory();
         } catch(IOException e){
-            throw new HTMLGenerationException();
+            throw new HTMLGenerationException(e.getMessage());
         }
         for(int i = 0; i < players.length; i++) {
             try{
@@ -85,7 +85,7 @@ public class Game {
 
                 Files.write(Paths.get("Player_Files/map_player_" + (i + 1) + ".html"), mapHTML.getBytes());
             }catch (IOException e) {
-                throw new HTMLGenerationException();
+                throw new HTMLGenerationException(e.getMessage());
             }
         }
     }
