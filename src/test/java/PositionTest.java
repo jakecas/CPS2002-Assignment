@@ -52,4 +52,9 @@ public class PositionTest {
     public void testEquals_diffPosition_returnsFalse(){
         assertNotEquals("Checking positions (0,0) and (3,4) are unequal.", origin, position34);
     }
+
+    @Test
+    public void testEquals_nullPosition_returnsFalse(){
+        assertNotEquals("Checking positions (0,0) and (3,4) are unequal.", origin, null);
+    }
 }
