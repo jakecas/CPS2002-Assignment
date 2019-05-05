@@ -1,8 +1,14 @@
+import enums.Difficulty;
+import enums.MapType;
+import mapFactory.Map;
 import exceptions.MapSizeUndefinedException;
 import exceptions.PositionOutOfBoundsException;
+import mapFactory.MapCreator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import propertyObjects.Position;
+import propertyObjects.Tile;
 
 import static org.junit.Assert.*;
 
@@ -11,7 +17,8 @@ public class MapTest {
 
     @Before
     public void setUp(){
-        map = new Map();
+        MapCreator mapCreator = new MapCreator();
+        map = mapCreator.createMap(MapType.SQUARE, Difficulty.SAFE);
     }
 
     @After
@@ -79,5 +86,4 @@ public class MapTest {
         map.generate(map.generateSeed());
         assertNull("Asserting that getTile returns null when parameter is null", map.getTile(null));
     }
-
 }

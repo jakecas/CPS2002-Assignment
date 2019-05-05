@@ -1,3 +1,6 @@
+package propertyObjects;
+
+import mapFactory.Map;
 import enums.Direction;
 import exceptions.PositionOutOfBoundsException;
 

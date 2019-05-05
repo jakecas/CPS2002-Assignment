@@ -1,3 +1,5 @@
+package propertyObjects;
+
 import java.util.Random;
 
 public class Position {

@@ -1,8 +1,15 @@
+package main;
+
+import enums.Difficulty;
+import enums.MapType;
+import mapFactory.Map;
 import enums.Direction;
 import enums.TileType;
 import exceptions.HTMLGenerationException;
 import exceptions.PositionOutOfBoundsException;
+import mapFactory.MapCreator;
 import org.apache.commons.io.FileUtils;
+import propertyObjects.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +27,9 @@ public class Game {
 
         turns = 0;
 
-        map = new Map();
+        MapCreator mapCreator = new MapCreator();
+
+        map = mapCreator.createMap(MapType.SQUARE, Difficulty.SAFE);
 
         map.setMapSize(mapSize);
         char[][] seed = map.generateSeed();
@@ -29,7 +38,7 @@ public class Game {
         setNumPlayers(numOfPlayers);
 
         for (int i = 0; i < players.length; i++) {
-            Map playerMap = new Map();
+            Map playerMap = mapCreator.createMap(MapType.SQUARE, Difficulty.SAFE);
             playerMap.setMapSize(mapSize);
             playerMap.generate(seed);
 
@@ -101,7 +110,7 @@ public class Game {
     public static boolean menu(Player player, int playerNum){
         boolean valid = false;
         Scanner input = new Scanner(System.in);
-        System.out.println("Player " + (playerNum+1) + "; Choose a direction:");
+        System.out.println("propertyObjects.Player " + (playerNum+1) + "; Choose a direction:");
         System.out.println("1. North");
         System.out.println("2. South");
         System.out.println("3. East");
@@ -124,14 +133,14 @@ public class Game {
                     player.move(Direction.WEST);
                     break;
                 default:
-                    System.out.println("Invalid direction for Player " + (playerNum + 1) + ", please try again.");
+                    System.out.println("Invalid direction for propertyObjects.Player " + (playerNum + 1) + ", please try again.");
                     valid = false;
             }
         }catch (PositionOutOfBoundsException e){
-            System.out.println("Destination is outside of map for Player " + (playerNum + 1) + ", please try again.");
+            System.out.println("Destination is outside of map for propertyObjects.Player " + (playerNum + 1) + ", please try again.");
             valid = false;
         }catch (InputMismatchException e){
-            System.out.println("Unrecognised input for Player " + (playerNum + 1)
+            System.out.println("Unrecognised input for propertyObjects.Player " + (playerNum + 1)
                     + ", integer required. Please try again.");
             input.nextLine();
         }
@@ -164,7 +173,7 @@ public class Game {
                     win = true;
                     winners[i] = true;
                 } else if (map.getTileType(player.getPosition()) == TileType.WATER){
-                    System.out.println("Player " + (i+1) + " drowned!");
+                    System.out.println("propertyObjects.Player " + (i+1) + " drowned!");
                     player.resetToInitialPosition();
                 }
             }
@@ -174,7 +183,7 @@ public class Game {
 
         for (int i = 0; i < playerCount; i++) {
             if(winners[i] == true){
-                System.out.println("Congratulations! Player " + (i+1) + " found the treasure!");
+                System.out.println("Congratulations! propertyObjects.Player " + (i+1) + " found the treasure!");
             }
         }
     }
