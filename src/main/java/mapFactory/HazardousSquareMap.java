@@ -5,11 +5,6 @@ import propertyObjects.Position;
 
 public class HazardousSquareMap extends SquareMap{
 
-    private int size;
-    public HazardousSquareMap(){
-        this.size = super.getMapSize();
-    }
-
     public char[][] generateSeed() {
         if(size == -1){
             throw new MapSizeUndefinedException("Generating Seed");

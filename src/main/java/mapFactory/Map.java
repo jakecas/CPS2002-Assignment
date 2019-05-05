@@ -12,7 +12,7 @@ public interface Map {
     boolean setMapSize(int size);
     void setIsLarge(boolean isLarge);
 
-    boolean isWaterPercentCorrect();
+    double waterPercent();
     int getMapSize();
     Tile getTile(Position position);
     TileType getTileType(Position position);

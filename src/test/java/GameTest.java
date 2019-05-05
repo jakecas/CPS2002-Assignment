@@ -1,5 +1,5 @@
-import mapFactory.Map;
 import main.Game;
+import mapFactory.Map;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

@@ -12,7 +12,7 @@ import java.nio.file.Files;
 
 public  abstract class SquareMap implements Map{
 
-    private int size;
+    protected static int size;
     private boolean isLarge;
     private Tile[][] tiles;
 
@@ -50,8 +50,15 @@ public  abstract class SquareMap implements Map{
         return tiles;
     }
 
-    public boolean isWaterPercentCorrect(){
-        return true;
+    public double waterPercent(){
+        int waterTiles = 0;
+        for(int i = 0; i < size; i++){
+            for(int j = 0; j < size; j++){
+                if (tiles[i][j].equals(TileType.WATER))
+                    waterTiles++;
+            }
+        }
+        return waterTiles/size;
     }
 
     public void generate(char[][] seed){
@@ -89,7 +96,7 @@ public  abstract class SquareMap implements Map{
     public String generateHTML(Position position){
         StringBuilder mapHTML = new StringBuilder();
 
-        URL resource = Game.class.getResource("map_prototype.html");
+        URL resource = Game.class.getClassLoader().getResource("map_prototype.html");
         File file = new File(resource.getFile());
 
         try {

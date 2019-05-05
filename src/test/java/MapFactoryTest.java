@@ -26,19 +26,15 @@ public class MapFactoryTest {
 
     @Test
     public void testGenerate_safeMap_correctPercentageOfWater_returnsTrue(){
-        assertTrue("Testing if water tile percentage is less than 10%", map.isWaterPercentCorrect());
+        map = mapCreator.createMap(MapType.SQUARE, Difficulty.SAFE);
+        assertTrue("Testing if water tile percentage is less than 10%", map.waterPercent() <= 0.1);
     }
 
     @Test
     public void testGenerate_HazardousMap_correctPercentageOfWater_returnsTrue(){
-        assertTrue("Testing if water tile percentage is between 25% - 35%", map.isWaterPercentCorrect());
-    }
-
-    @Test
-    public void testCreateMap_squareMap_isOfTypeSquareMap(){
-        map = mapCreator.createMap(MapType.SQUARE, Difficulty.SAFE);
-        SquareMap squareMap = new SafeSquareMap();
-        assertThat("Testing if the new map object is of type SquareMap", squareMap, instanceOf(map.getClass()));
+        map = mapCreator.createMap(MapType.SQUARE, Difficulty.HAZARDOUS);
+        assertTrue("Testing if water tile percentage is between 25% - 35%",
+                (map.waterPercent() >= 0.25) && (map.waterPercent() <= 0.35));
     }
 
     @Test

@@ -70,13 +70,13 @@ public class Game {
     }
 
     public static void generateDirectory() throws IOException{
-            // Creating the directory if it doesn't exist
-            FileUtils.forceMkdir(new File("Player_Files/"));
-            // Cleaning the directory of maps from previous iterations.
-            FileUtils.cleanDirectory(new File("Player_Files/"));
-            // Copying the stylemap resource to the directory.
-            File css = new File(Game.class.getResource("style_map.css").getFile());
-            FileUtils.copyFile(css, new File("Player_Files/style_map.css"));
+        // Creating the directory if it doesn't exist
+        FileUtils.forceMkdir(new File("Player_Files/"));
+        // Cleaning the directory of maps from previous iterations.
+        FileUtils.cleanDirectory(new File("Player_Files/"));
+        // Copying the stylemap resource to the directory.
+        File css = new File(Game.class.getClassLoader().getResource("style_map.css").getFile());
+        FileUtils.copyFile(css, new File("Player_Files/style_map.css"));
     }
 
     public static void generateHTMLFiles() {
@@ -110,7 +110,7 @@ public class Game {
     public static boolean menu(Player player, int playerNum){
         boolean valid = false;
         Scanner input = new Scanner(System.in);
-        System.out.println("propertyObjects.Player " + (playerNum+1) + "; Choose a direction:");
+        System.out.println("Player " + (playerNum+1) + "; Choose a direction:");
         System.out.println("1. North");
         System.out.println("2. South");
         System.out.println("3. East");
@@ -133,14 +133,14 @@ public class Game {
                     player.move(Direction.WEST);
                     break;
                 default:
-                    System.out.println("Invalid direction for propertyObjects.Player " + (playerNum + 1) + ", please try again.");
+                    System.out.println("Invalid direction for Player " + (playerNum + 1) + ", please try again.");
                     valid = false;
             }
         }catch (PositionOutOfBoundsException e){
-            System.out.println("Destination is outside of map for propertyObjects.Player " + (playerNum + 1) + ", please try again.");
+            System.out.println("Destination is outside of map for Player " + (playerNum + 1) + ", please try again.");
             valid = false;
         }catch (InputMismatchException e){
-            System.out.println("Unrecognised input for propertyObjects.Player " + (playerNum + 1)
+            System.out.println("Unrecognised input for Player " + (playerNum + 1)
                     + ", integer required. Please try again.");
             input.nextLine();
         }
