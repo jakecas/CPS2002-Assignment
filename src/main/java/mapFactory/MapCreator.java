@@ -5,15 +5,22 @@ import enums.MapType;
 
 public class MapCreator {
 
-    public Map createMap(MapType mapType, Difficulty difficulty){
+    public Map createMap(MapType mapType, Difficulty difficulty, int mapSize){
         switch (mapType){
             case SQUARE:
-                return new SquareMapCreator().createSquareMap(difficulty);
+                return new SquareMapCreator().createSquareMap(difficulty, mapSize);
             default:
                 return null; // Throw an exception
         }
     }
 
-
+    public Map createMap(MapType mapType, Difficulty difficulty, char[][] seed){
+        switch (mapType){
+            case SQUARE:
+                return new SquareMapCreator().createSquareMap(difficulty, seed);
+            default:
+                return null; // Throw an exception
+        }
+    }
 
 }

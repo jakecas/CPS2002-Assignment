@@ -29,18 +29,13 @@ public class Game {
 
         MapCreator mapCreator = new MapCreator();
 
-        map = mapCreator.createMap(MapType.SQUARE, Difficulty.SAFE);
+        map = mapCreator.createMap(MapType.SQUARE, Difficulty.SAFE, mapSize);
 
-        map.setMapSize(mapSize);
-        char[][] seed = map.generateSeed();
-        map.generate(seed);
 
         setNumPlayers(numOfPlayers);
 
         for (int i = 0; i < players.length; i++) {
-            Map playerMap = mapCreator.createMap(MapType.SQUARE, Difficulty.SAFE);
-            playerMap.setMapSize(mapSize);
-            playerMap.generate(seed);
+            Map playerMap = mapCreator.createMap(MapType.SQUARE, Difficulty.SAFE, map.getSeed());
 
             Position position;
             do {

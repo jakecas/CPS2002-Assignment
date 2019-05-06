@@ -17,5 +17,6 @@ public interface Map {
     Tile getTile(Position position);
     TileType getTileType(Position position);
     Tile[][] getTiles();
+    char[][] getSeed();
     boolean getIsLarge();
 }

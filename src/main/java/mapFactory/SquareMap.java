@@ -1,5 +1,6 @@
 package mapFactory;
 
+import exceptions.MapSizeUndefinedException;
 import propertyObjects.*;
 import main.Game;
 import enums.TileType;
@@ -10,10 +11,11 @@ import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 
-public  abstract class SquareMap implements Map{
+public abstract class SquareMap implements Map{
 
     protected static int size;
     private boolean isLarge;
+    private char[][] seed;
     private Tile[][] tiles;
 
     public SquareMap() {
@@ -87,6 +89,46 @@ public  abstract class SquareMap implements Map{
         }
 
         return tiles[position.getX()][position.getY()];
+    }
+
+    protected char[][] generateSeed(double percentWater){
+        if(size == -1){
+            throw new MapSizeUndefinedException("Generating Seed");
+        }
+        seed = new char[size][size];
+        for(int i = 0; i < size; i++){
+            for(int j = 0; j < size; j++){
+                seed[i][j] = 'g';
+            }
+        }
+
+        // Calculating the number of water tiles, adding one for treasure.
+        int waterTilesSize = (int) Math.round(percentWater*size*size) + 1;
+
+        Position[] specialTiles = new Position[waterTilesSize];
+        for(int i = 0; i < waterTilesSize; i++){
+            specialTiles[i] = Position.randomPosition(size);
+            for(int j = 0; j < i; j++){
+                if(Position.euclideanDistance(specialTiles[i], specialTiles[j]) <2){
+                    i--;
+                    break;
+                }
+            }
+        }
+
+        Position position = specialTiles[0];
+        seed[position.getX()][position.getY()] = 't';
+
+        for(int i = 1; i < waterTilesSize; i++){
+            position = specialTiles[i];
+            seed[position.getX()][position.getY()] = 'w';
+        }
+
+        return seed;
+    }
+
+    public char[][] getSeed(){
+        return seed;
     }
 
     public TileType getTileType(Position position){
