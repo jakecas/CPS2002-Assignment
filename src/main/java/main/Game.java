@@ -2,14 +2,14 @@ package main;
 
 import enums.Difficulty;
 import enums.MapType;
-import mapFactory.Map;
+import objects.maps.Map;
 import enums.Direction;
 import enums.TileType;
 import exceptions.HTMLGenerationException;
 import exceptions.PositionOutOfBoundsException;
-import mapFactory.MapCreator;
+import factories.MapCreator;
 import org.apache.commons.io.FileUtils;
-import propertyObjects.*;
+import objects.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -67,7 +67,7 @@ public class Game {
     public static void generateDirectory() throws IOException{
         // Creating the directory if it doesn't exist
         FileUtils.forceMkdir(new File("Player_Files/"));
-        // Cleaning the directory of maps from previous iterations.
+        // Cleaning the directory of objects.maps from previous iterations.
         FileUtils.cleanDirectory(new File("Player_Files/"));
         // Copying the stylemap resource to the directory.
         File css = new File(Game.class.getClassLoader().getResource("style_map.css").getFile());
@@ -168,7 +168,7 @@ public class Game {
                     win = true;
                     winners[i] = true;
                 } else if (map.getTileType(player.getPosition()) == TileType.WATER){
-                    System.out.println("propertyObjects.Player " + (i+1) + " drowned!");
+                    System.out.println("objects.Player " + (i+1) + " drowned!");
                     player.resetToInitialPosition();
                 }
             }
@@ -178,7 +178,7 @@ public class Game {
 
         for (int i = 0; i < playerCount; i++) {
             if(winners[i] == true){
-                System.out.println("Congratulations! propertyObjects.Player " + (i+1) + " found the treasure!");
+                System.out.println("Congratulations! objects.Player " + (i+1) + " found the treasure!");
             }
         }
     }

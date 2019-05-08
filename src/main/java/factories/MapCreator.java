@@ -1,7 +1,8 @@
-package mapFactory;
+package factories;
 
 import enums.Difficulty;
 import enums.MapType;
+import objects.maps.Map;
 
 public class MapCreator {
 

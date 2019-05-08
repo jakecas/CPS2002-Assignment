@@ -1,10 +1,10 @@
 import main.Game;
-import mapFactory.Map;
+import objects.maps.Map;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import propertyObjects.Player;
-import propertyObjects.Position;
+import objects.Player;
+import objects.Position;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

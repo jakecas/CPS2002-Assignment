@@ -1,6 +1,7 @@
-package mapFactory;
+package factories;
 
 import enums.Difficulty;
+import objects.maps.Map;
 
 public class SquareMapCreator extends MapCreator {
 

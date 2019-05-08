@@ -1,4 +1,4 @@
-package propertyObjects;
+package objects;
 
 import java.util.Random;
 

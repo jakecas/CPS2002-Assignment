@@ -1,8 +1,8 @@
-package mapFactory;
+package objects.maps;
 
 import enums.TileType;
-import propertyObjects.Position;
-import propertyObjects.Tile;
+import objects.Position;
+import objects.Tile;
 
 public interface Map {
     void generate(char[][] seed);
@@ -12,7 +12,6 @@ public interface Map {
     boolean setMapSize(int size);
     void setIsLarge(boolean isLarge);
 
-    double waterPercent();
     int getMapSize();
     Tile getTile(Position position);
     TileType getTileType(Position position);

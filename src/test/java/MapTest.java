@@ -1,14 +1,15 @@
 import enums.Difficulty;
 import enums.MapType;
-import mapFactory.Map;
+import objects.maps.Map;
 import exceptions.MapSizeUndefinedException;
 import exceptions.PositionOutOfBoundsException;
-import mapFactory.MapCreator;
+import factories.MapCreator;
+import objects.maps.SafeSquareMap;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import propertyObjects.Position;
-import propertyObjects.Tile;
+import objects.Position;
+import objects.Tile;
 
 import static org.junit.Assert.*;
 
@@ -18,7 +19,7 @@ public class MapTest {
     @Before
     public void setUp(){
         MapCreator mapCreator = new MapCreator();
-        map = mapCreator.createMap(MapType.SQUARE, Difficulty.SAFE);
+        map = mapCreator.createMap(MapType.SQUARE, Difficulty.SAFE, 5);
     }
 
     @After
@@ -70,6 +71,7 @@ public class MapTest {
 
     @Test(expected = MapSizeUndefinedException.class)
     public void testGenerate_sizeUndefined_throwsException(){
+        map = new SafeSquareMap();
         map.generate(map.generateSeed());
     }
 

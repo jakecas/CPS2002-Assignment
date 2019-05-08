@@ -1,6 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
-import propertyObjects.Position;
+import objects.Position;
 
 import static org.junit.Assert.*;
 

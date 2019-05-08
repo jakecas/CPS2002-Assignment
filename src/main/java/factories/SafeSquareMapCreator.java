@@ -1,4 +1,7 @@
-package mapFactory;
+package factories;
+
+import objects.maps.Map;
+import objects.maps.SafeSquareMap;
 
 public class SafeSquareMapCreator extends SquareMapCreator {
 

@@ -1,7 +1,7 @@
-package mapFactory;
+package objects.maps;
 
 import exceptions.MapSizeUndefinedException;
-import propertyObjects.*;
+import objects.*;
 import main.Game;
 import enums.TileType;
 import exceptions.HTMLGenerationException;
@@ -52,17 +52,6 @@ public abstract class SquareMap implements Map{
         return tiles;
     }
 
-    public double waterPercent(){
-        int waterTiles = 0;
-        for(int i = 0; i < size; i++){
-            for(int j = 0; j < size; j++){
-                if (tiles[i][j].equals(TileType.WATER))
-                    waterTiles++;
-            }
-        }
-        return waterTiles/size;
-    }
-
     public void generate(char[][] seed){
         tiles = new Tile[size][size];
         for(int i = 0; i < size; i++){
@@ -103,13 +92,13 @@ public abstract class SquareMap implements Map{
         }
 
         // Calculating the number of water tiles, adding one for treasure.
-        int waterTilesSize = (int) Math.round(percentWater*size*size) + 1;
+        int waterTilesSize = (int) Math.floor(percentWater*size*size) + 1;
 
         Position[] specialTiles = new Position[waterTilesSize];
         for(int i = 0; i < waterTilesSize; i++){
             specialTiles[i] = Position.randomPosition(size);
             for(int j = 0; j < i; j++){
-                if(Position.euclideanDistance(specialTiles[i], specialTiles[j]) <2){
+                if(Position.euclideanDistance(specialTiles[i], specialTiles[j]) < 1){
                     i--;
                     break;
                 }
