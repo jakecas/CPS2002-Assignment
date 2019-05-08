@@ -24,7 +24,7 @@ This branch was used to write the code that would create an HTML file for each p
 This branch was used to create the basic game loop and logic for the user to play. 
 Moreover, previously failing tests were now a success due to the added logic.
 
-### Bugfix Map Generation
+### Bugfix objects.maps.Map Generation
 This branch was created to solve an issue with the map as each player had the same map object. 
 This was resolved by generating a seed.
 

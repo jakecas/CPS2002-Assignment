@@ -1,8 +1,15 @@
+package main;
+
+import enums.Difficulty;
+import enums.MapType;
+import objects.maps.Map;
 import enums.Direction;
 import enums.TileType;
 import exceptions.HTMLGenerationException;
 import exceptions.PositionOutOfBoundsException;
+import factories.MapCreator;
 import org.apache.commons.io.FileUtils;
+import objects.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,18 +27,15 @@ public class Game {
 
         turns = 0;
 
-        map = new Map();
+        MapCreator mapCreator = new MapCreator();
 
-        map.setMapSize(mapSize);
-        char[][] seed = map.generateSeed();
-        map.generate(seed);
+        map = mapCreator.createMap(MapType.SQUARE, Difficulty.SAFE, mapSize);
+
 
         setNumPlayers(numOfPlayers);
 
         for (int i = 0; i < players.length; i++) {
-            Map playerMap = new Map();
-            playerMap.setMapSize(mapSize);
-            playerMap.generate(seed);
+            Map playerMap = mapCreator.createMap(MapType.SQUARE, Difficulty.SAFE, map.getSeed());
 
             Position position;
             do {
@@ -61,13 +65,13 @@ public class Game {
     }
 
     public static void generateDirectory() throws IOException{
-            // Creating the directory if it doesn't exist
-            FileUtils.forceMkdir(new File("Player_Files/"));
-            // Cleaning the directory of maps from previous iterations.
-            FileUtils.cleanDirectory(new File("Player_Files/"));
-            // Copying the stylemap resource to the directory.
-            File css = new File(Game.class.getResource("style_map.css").getFile());
-            FileUtils.copyFile(css, new File("Player_Files/style_map.css"));
+        // Creating the directory if it doesn't exist
+        FileUtils.forceMkdir(new File("Player_Files/"));
+        // Cleaning the directory of objects.maps from previous iterations.
+        FileUtils.cleanDirectory(new File("Player_Files/"));
+        // Copying the stylemap resource to the directory.
+        File css = new File(Game.class.getClassLoader().getResource("style_map.css").getFile());
+        FileUtils.copyFile(css, new File("Player_Files/style_map.css"));
     }
 
     public static void generateHTMLFiles() {
@@ -164,7 +168,7 @@ public class Game {
                     win = true;
                     winners[i] = true;
                 } else if (map.getTileType(player.getPosition()) == TileType.WATER){
-                    System.out.println("Player " + (i+1) + " drowned!");
+                    System.out.println("objects.Player " + (i+1) + " drowned!");
                     player.resetToInitialPosition();
                 }
             }
@@ -174,7 +178,7 @@ public class Game {
 
         for (int i = 0; i < playerCount; i++) {
             if(winners[i] == true){
-                System.out.println("Congratulations! Player " + (i+1) + " found the treasure!");
+                System.out.println("Congratulations! objects.Player " + (i+1) + " found the treasure!");
             }
         }
     }
