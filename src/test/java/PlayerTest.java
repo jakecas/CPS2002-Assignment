@@ -1,8 +1,14 @@
+import enums.Difficulty;
+import enums.MapType;
+import objects.maps.Map;
 import enums.Direction;
 import exceptions.PositionOutOfBoundsException;
+import factories.MapCreator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import objects.Player;
+import objects.Position;
 
 import static org.junit.Assert.*;
 
@@ -14,7 +20,8 @@ public class PlayerTest {
     @Before
     public void setUp() {
         position = new Position(0, 0);
-        map = new Map();
+        MapCreator mapCreator = new MapCreator();
+        map = mapCreator.createMap(MapType.SQUARE, Difficulty.SAFE, 5);
         map.setMapSize(5);
         map.generate(map.generateSeed());
         player = new Player(position, map);

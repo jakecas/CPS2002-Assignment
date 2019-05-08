@@ -1,3 +1,6 @@
+package objects;
+
+import objects.maps.Map;
 import enums.Direction;
 import exceptions.PositionOutOfBoundsException;
 

@@ -1,3 +1,5 @@
+package objects;
+
 import enums.TileType;
 
 public class Tile {
