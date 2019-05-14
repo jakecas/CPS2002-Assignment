@@ -13,12 +13,12 @@ import java.nio.file.Files;
 
 public abstract class SquareMap implements Map{
 
-    protected static int size;
+    private static int size;
     private boolean isLarge;
     private char[][] seed;
     private Tile[][] tiles;
 
-    public SquareMap() {
+    protected SquareMap() {
         size = -1;
         isLarge = false;
     }

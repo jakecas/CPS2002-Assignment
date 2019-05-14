@@ -5,6 +5,7 @@ import objects.Position;
 import objects.Tile;
 
 public interface Map {
+
     void generate(char[][] seed);
     char[][] generateSeed();
     String generateHTML(Position position);
