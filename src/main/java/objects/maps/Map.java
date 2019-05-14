@@ -1,14 +1,16 @@
 package objects.maps;
 
 import enums.TileType;
+import objects.Player;
 import objects.Position;
 import objects.Tile;
+
 
 public interface Map {
 
     void generate(char[][] seed);
     char[][] generateSeed();
-    String generateHTML(Position position);
+    String generateHTML(Player player);
 
     boolean setMapSize(int size);
     void setIsLarge(boolean isLarge);

@@ -44,7 +44,7 @@ public class Game {
 
 
             players[i] = new Player(position, playerMap);
-            players[i].getMap().getTile(position).revealTile();
+            players[i].revealTile(position);
         }
 
     }
