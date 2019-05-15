@@ -15,15 +15,4 @@ public class SquareMapCreator extends MapCreator {
                 return null; // Throw an exception
         }
     }
-
-    public Map createSquareMap(Difficulty difficulty, char[][] seed){
-        switch (difficulty){
-            case SAFE:
-                return new SafeSquareMapCreator().createSafeSquareMap(seed);
-            case HAZARDOUS:
-                return new HazardousSquareMapCreator().createHazardousSquareMap(seed);
-            default:
-                return null; // Throw an exception
-        }
-    }
 }

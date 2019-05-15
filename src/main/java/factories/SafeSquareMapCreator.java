@@ -11,11 +11,4 @@ public class SafeSquareMapCreator extends SquareMapCreator {
         map.generate(map.generateSeed());
         return map;
     }
-
-    public Map createSafeSquareMap(char[][] seed){
-        SafeSquareMap map =  SafeSquareMap.getInstance();
-        map.setMapSize(seed.length);
-        map.generate(seed);
-        return map;
-    }
 }

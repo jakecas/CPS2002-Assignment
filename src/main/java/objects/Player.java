@@ -52,7 +52,10 @@ public class Player {
     }
 
     public void revealTile(Position position){
-        this.revealedTiles.add(map.getTile(position));
+        Tile tile = map.getTile(position);
+        if(!revealedTiles.contains(tile)) {
+            this.revealedTiles.add(tile);
+        }
     }
 
     public boolean isRevealed(Position position){

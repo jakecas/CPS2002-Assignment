@@ -11,11 +11,4 @@ public class HazardousSquareMapCreator extends SquareMapCreator {
         map.generate(map.generateSeed());
         return map;
     }
-
-    public Map createHazardousSquareMap(char[][] seed){
-        HazardousSquareMap map =  HazardousSquareMap.getInstance();
-        map.setMapSize(seed.length);
-        map.generate(seed);
-        return map;
-    }
 }

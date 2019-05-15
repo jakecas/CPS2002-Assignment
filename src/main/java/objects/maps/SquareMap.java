@@ -167,8 +167,8 @@ public abstract class SquareMap implements Map{
                 tilesHTML.append(",");
                 tilesHTML.append(row);
 
-                if (col == player.getInitialPosition().getX()){
-                    if (row == player.getInitialPosition().getY()) {
+                if (col == player.getPosition().getX()){
+                    if (row == player.getPosition().getY()) {
                         tilesHTML.append("<p>P%pnum<p>");
                     }
                 }
