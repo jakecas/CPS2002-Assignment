@@ -15,13 +15,4 @@ public class MapCreator {
         }
     }
 
-    public Map createMap(MapType mapType, Difficulty difficulty, char[][] seed){
-        switch (mapType){
-            case SQUARE:
-                return new SquareMapCreator().createSquareMap(difficulty, seed);
-            default:
-                return null; // Throw an exception
-        }
-    }
-
 }
