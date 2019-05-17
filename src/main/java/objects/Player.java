@@ -6,7 +6,6 @@ import objects.maps.Map;
 
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.List;
 
 public class Player {
     private final Position initialPosition;
@@ -51,6 +50,7 @@ public class Player {
         revealTile(position);
     }
 
+    // TO REMOVE
     public void revealTile(Position position){
         Tile tile = map.getTile(position);
         if(!revealedTiles.contains(tile)) {
