@@ -3,39 +3,32 @@ package observables;
 import objects.Position;
 import objects.Tile;
 import observers.Observer;
-import observers.Team;
 import objects.maps.Map;
 
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.HashMap;
 
-public class TeamList implements Observable{
+public class Team implements Observable{
 
     private Collection<Observer> observers;
-    private HashMap<String, Collection<Tile>> teamTiles;
+    private Collection<Tile> revealedTiles;
     private Map map;
 
-    public TeamList(Map map){
+    public Team(Map map){
         observers = new LinkedList<>();
-        teamTiles = new HashMap<>();
+        revealedTiles = new LinkedList<>();
         this.map = map;
     }
 
-    public void addTeam(Team team){
-        teamTiles.put(team.getTeamName(), new LinkedList<>());
-    }
-
-    public Collection<Tile> getTeamTiles(String teamName){
-        return teamTiles.get(teamName);
-    }
-
-    public void revealTile(String teamName, Position position){
+    public void revealTile(Position position){
         Tile tile = map.getTile(position);
-        Collection<Tile> revealedTiles = getTeamTiles(teamName);
         if(!revealedTiles.contains(tile)) {
             revealedTiles.add(tile);
         }
+    }
+
+    public int getTeamSize(){
+        return observers.size();
     }
 
     public void endTurn(){

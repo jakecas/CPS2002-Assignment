@@ -1,25 +1,33 @@
-package objects;
+package observers;
 
 import enums.Direction;
 import exceptions.PositionOutOfBoundsException;
+import objects.Position;
+import objects.Tile;
 import objects.maps.Map;
+import observables.Team;
 
 import java.util.Collection;
 import java.util.LinkedList;
 
-public class Player {
+public class Player implements Observer{
     private final Position initialPosition;
     private Position position;
     private Map map;
     private Collection<Tile> revealedTiles;
+    private Team team;
+    private String html;
 
-    public Player(Position position, Map map){
+    public Player(Position position, Map map, Team team){
         this.initialPosition = new Position(position.getX(), position.getY());
         this.position = position;
         this.map = map;
+        this.team = team;
         this.revealedTiles = new LinkedList<>();
 
         revealTile(initialPosition);
+
+        team.register(this);
     }
 
     public Map getMap(){
@@ -82,10 +90,15 @@ public class Player {
     }
 
     public String printMap(){
-       return map.generateHTML(this);
+       return html;
     }
 
     public void resetToInitialPosition() {
         position = initialPosition;
+    }
+
+    @Override
+    public void update(){
+        html = map.generateHTML(this); // Pass Team and current position
     }
 }

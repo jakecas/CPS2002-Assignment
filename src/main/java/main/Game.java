@@ -8,8 +8,8 @@ import enums.TileType;
 import exceptions.HTMLGenerationException;
 import exceptions.PositionOutOfBoundsException;
 import factories.MapCreator;
-import observables.TeamList;
-import observers.Team;
+import observables.Team;
+import observers.Player;
 import org.apache.commons.io.FileUtils;
 import objects.*;
 
@@ -25,7 +25,6 @@ public class Game {
     private static Player[] players;
     private static Map map;
     private static Team[] teams;
-    private static TeamList teamList;
 
     public static void startGame(int numOfPlayers, int numOfTeams, int mapSize){
 
@@ -37,15 +36,12 @@ public class Game {
 
         setNumPlayers(numOfPlayers);
 
-        teamList = new TeamList(map);
         teams = new Team[numOfTeams];
 
         int teamSize = (int)Math.ceil(numOfPlayers/numOfTeams);
 
         for(int i = 0; i < teams.length; i++){
-            String teamName = "Team" + (i+1);
-            teams[i] = new Team(teamName, teamList);
-            teamList.addTeam(teams[i]);
+            teams[i] = new Team(map);
 
             for (int j = i*teamSize; (j < (i+1)*teamSize && j < players.length); j++) {
                 Position position;
@@ -53,8 +49,7 @@ public class Game {
                     position = Position.randomPosition(map.getMapSize());
                 }while (map.getTileType(position) != TileType.GRASS);
 
-                players[j] = new Player(position, map);
-                teams[i].addPlayer(players[i]);
+                players[j] = new Player(position, map, teams[i]);
             }
         }
     }
@@ -112,7 +107,7 @@ public class Game {
         return players;
     }
 
-    public static boolean menu(String teamName, Player player, int playerNum){
+    public static boolean menu(Team team, Player player, int playerNum){
         boolean valid = false;
         Scanner input = new Scanner(System.in);
         System.out.println("Player " + (playerNum+1) + "; Choose a direction:");
@@ -126,16 +121,16 @@ public class Game {
             valid = true;
             switch (choice) {
                 case 1:
-                    teamList.revealTile(teamName, player.move(Direction.NORTH));
+                    team.revealTile(player.move(Direction.NORTH));
                     break;
                 case 2:
-                    teamList.revealTile(teamName, player.move(Direction.SOUTH));
+                    team.revealTile(player.move(Direction.SOUTH));
                     break;
                 case 3:
-                    teamList.revealTile(teamName,player.move(Direction.EAST));
+                    team.revealTile(player.move(Direction.EAST));
                     break;
                 case 4:
-                    teamList.revealTile(teamName,player.move(Direction.WEST));
+                    team.revealTile(player.move(Direction.WEST));
                     break;
                 default:
                     System.out.println("Invalid direction for Player " + (playerNum + 1) + ", please try again.");
@@ -172,33 +167,32 @@ public class Game {
 
         do {
             for(int i = 0; i < teams.length; i++) {
-                for (int j = 0; j < teams[i].getTeamSize(); j++) {
-                    Player player = teams[i].getPlayer(j);
+                int previousTeamUpper = teams[0].getTeamSize()*i; // E.g: for 5 player teams; when team 2 turn, ptu = 5
+                for (int j = previousTeamUpper; j < (previousTeamUpper + teams[i].getTeamSize()); j++) {
+                    Player player = players[j];
                     boolean valid = false;
-                    // i.e: team 2 player 1 with 5 player teams = 6
-                    // Change to Team X Player X for display?
-                    int globalPlayerNum = teams[0].getTeamSize()*i + j;
+
                     while (!valid) {
-                        valid = menu(teams[i].getTeamName(), player, globalPlayerNum);
+                        valid = menu(teams[i], player, j);
                     }
 
                     if (map.getTileType(player.getPosition()) == TileType.TREASURE) {
                         win = true;
                         winners[i] = true;
                     } else if (map.getTileType(player.getPosition()) == TileType.WATER) {
-                        System.out.println("objects.Player " + (i + 1) + " drowned!");
+                        System.out.println("Player " + (i + 1) + " drowned!");
                         player.resetToInitialPosition();
                     }
                 }
+                teams[i].endTurn(); // Notify observers of all changes
             }
-            teamList.endTurn(); // Notify observers of all changes
             turns++;
             generateHTMLFiles();
         } while(!win);
 
         for (int i = 0; i < playerCount; i++) {
             if(winners[i] == true){
-                System.out.println("Congratulations! objects.Player " + (i+1) + " found the treasure!");
+                System.out.println("Congratulations! Player " + (i+1) + " found the treasure!");
             }
         }
     }

@@ -6,12 +6,11 @@ import main.Game;
 import enums.TileType;
 import exceptions.HTMLGenerationException;
 import exceptions.PositionOutOfBoundsException;
+import observers.Player;
 
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
-import java.util.Collection;
-import java.util.List;
 
 public abstract class SquareMap implements Map{
 

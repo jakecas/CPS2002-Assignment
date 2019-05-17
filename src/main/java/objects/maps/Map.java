@@ -1,7 +1,7 @@
 package objects.maps;
 
 import enums.TileType;
-import objects.Player;
+import observers.Player;
 import objects.Position;
 import objects.Tile;
 

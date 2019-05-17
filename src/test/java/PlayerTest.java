@@ -7,7 +7,7 @@ import factories.MapCreator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import objects.Player;
+import observers.Player;
 import objects.Position;
 
 import static org.junit.Assert.*;
