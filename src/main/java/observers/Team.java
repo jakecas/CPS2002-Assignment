@@ -31,7 +31,7 @@ public class Team implements Observer {
     @Override
     public void update(){
         for(Player player: players){
-
+            // Edit player's HTML
         }
     }
 }

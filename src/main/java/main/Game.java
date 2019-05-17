@@ -8,6 +8,8 @@ import enums.TileType;
 import exceptions.HTMLGenerationException;
 import exceptions.PositionOutOfBoundsException;
 import factories.MapCreator;
+import observables.TeamList;
+import observers.Team;
 import org.apache.commons.io.FileUtils;
 import objects.*;
 
@@ -22,8 +24,10 @@ public class Game {
     private static int turns;
     private static Player[] players;
     private static Map map;
+    private static Team[] teams;
+    private static TeamList teamList;
 
-    public static void startGame(int numOfPlayers, int mapSize){
+    public static void startGame(int numOfPlayers, int numOfTeams, int mapSize){
 
         turns = 0;
 
@@ -31,19 +35,27 @@ public class Game {
 
         map = mapCreator.createMap(MapType.SQUARE, Difficulty.SAFE, mapSize);
 
-
         setNumPlayers(numOfPlayers);
 
-        for (int i = 0; i < players.length; i++) {
-            Position position;
-            do {
-                position = Position.randomPosition(map.getMapSize());
-            }while (map.getTileType(position) != TileType.GRASS);
+        teamList = new TeamList(map);
+        teams = new Team[numOfTeams];
 
+        int teamSize = (int)Math.ceil(numOfPlayers/numOfTeams);
 
-            players[i] = new Player(position, map);
+        for(int j = 0; j < teams.length; j++){
+            String teamName = "Team" + (j+1);
+            teams[j] = new Team(teamName, teamList);
+
+            for (int i = j*teamSize; (i < (j+1)*teamSize && i < players.length); i++) {
+                Position position;
+                do {
+                    position = Position.randomPosition(map.getMapSize());
+                }while (map.getTileType(position) != TileType.GRASS);
+
+                players[i] = new Player(position, map);
+                teams[j].addPlayer(players[i]);
+            }
         }
-
     }
 
     public static boolean setNumPlayers(int n){
@@ -144,10 +156,12 @@ public class Game {
 
         System.out.println("How many players? (2-8 players)");
         int playerCount = input.nextInt();
+        System.out.println("How many teams?");
+        int numOfTeams = input.nextInt();
         System.out.println("How large is the map? (5-50 for 2-4 players, 8-50 for 5-8 players)");
         int mapSize = input.nextInt();
 
-        startGame(playerCount, mapSize);
+        startGame(playerCount, numOfTeams, mapSize);
         generateHTMLFiles();
 
         boolean win = false;
