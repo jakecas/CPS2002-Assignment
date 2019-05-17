@@ -45,13 +45,13 @@ public class MapFactoryTest {
 
     @Test
     public void testCreateMap_safeSquareMap_isOfTypeSafeSquareMap(){
-        SafeSquareMap safeSquareMap = new SafeSquareMap();
+        SafeSquareMap safeSquareMap = SafeSquareMap.getInstance();
         assertThat("Testing if the new map object is of type SafeSquareMap", safeSquareMap, instanceOf(safeMap.getClass()));
     }
 
     @Test
     public void testCreateMap_hazardousSquareMap_isOfTypeHazardousSquareMap(){
-        HazardousSquareMap hazardousSquareMap = new HazardousSquareMap();
+        HazardousSquareMap hazardousSquareMap = HazardousSquareMap.getInstance();
         assertThat("Testing if the new map object is of type HazardousSquareMap", hazardousSquareMap, instanceOf(hazardousMap.getClass()));
     }
 

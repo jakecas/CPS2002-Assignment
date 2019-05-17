@@ -1,18 +1,26 @@
 package objects;
 
-import objects.maps.Map;
 import enums.Direction;
 import exceptions.PositionOutOfBoundsException;
+import objects.maps.Map;
+
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Player {
     private final Position initialPosition;
     private Position position;
     private Map map;
+    private Collection<Tile> revealedTiles;
 
     public Player(Position position, Map map){
         this.initialPosition = new Position(position.getX(), position.getY());
         this.position = position;
         this.map = map;
+        this.revealedTiles = new LinkedList<>();
+
+        revealTile(initialPosition);
     }
 
     public Map getMap(){
@@ -40,7 +48,22 @@ public class Player {
             position = temp;
             throw new PositionOutOfBoundsException(position.toString());
         }
-        map.getTile(position).revealTile();
+        revealTile(position);
+    }
+
+    public void revealTile(Position position){
+        Tile tile = map.getTile(position);
+        if(!revealedTiles.contains(tile)) {
+            this.revealedTiles.add(tile);
+        }
+    }
+
+    public boolean isRevealed(Position position){
+        return isRevealed(map.getTile(position));
+    }
+
+    public boolean isRevealed(Tile tile){
+        return revealedTiles.contains(tile);
     }
 
     public void setPosition(Position position) {
@@ -59,7 +82,7 @@ public class Player {
     }
 
     public String printMap(){
-       return map.generateHTML(position);
+       return map.generateHTML(this);
     }
 
     public void resetToInitialPosition() {

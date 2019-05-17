@@ -35,16 +35,13 @@ public class Game {
         setNumPlayers(numOfPlayers);
 
         for (int i = 0; i < players.length; i++) {
-            Map playerMap = mapCreator.createMap(MapType.SQUARE, Difficulty.SAFE, map.getSeed());
-
             Position position;
             do {
                 position = Position.randomPosition(map.getMapSize());
-            }while (playerMap.getTileType(position) != TileType.GRASS);
+            }while (map.getTileType(position) != TileType.GRASS);
 
 
-            players[i] = new Player(position, playerMap);
-            players[i].getMap().getTile(position).revealTile();
+            players[i] = new Player(position, map);
         }
 
     }

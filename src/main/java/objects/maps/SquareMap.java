@@ -10,15 +10,17 @@ import exceptions.PositionOutOfBoundsException;
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
+import java.util.Collection;
+import java.util.List;
 
 public abstract class SquareMap implements Map{
 
-    protected static int size;
+    private static int size;
     private boolean isLarge;
     private char[][] seed;
     private Tile[][] tiles;
 
-    public SquareMap() {
+    protected SquareMap() {
         size = -1;
         isLarge = false;
     }
@@ -124,7 +126,7 @@ public abstract class SquareMap implements Map{
         return getTile(position).getTileType();
     }
 
-    public String generateHTML(Position position){
+    public String generateHTML(Player player){
         StringBuilder mapHTML = new StringBuilder();
 
         URL resource = Game.class.getClassLoader().getResource("map_prototype.html");
@@ -158,14 +160,15 @@ public abstract class SquareMap implements Map{
 
             for (int col = 0; col < getMapSize(); col++) {
                 // Output as (column, row) to match (x, y) convention
-                tilesHTML.append(tiles[col][row].toHTML());
+                boolean isRevealed = player.isRevealed(tiles[col][row]);
+                tilesHTML.append(tiles[col][row].toHTML(isRevealed));
                 tilesHTML.append( "\">");
                 tilesHTML.append(col);
                 tilesHTML.append(",");
                 tilesHTML.append(row);
 
-                if (col == position.getX()){
-                    if (row == position.getY()) {
+                if (col == player.getPosition().getX()){
+                    if (row == player.getPosition().getY()) {
                         tilesHTML.append("<p>P%pnum<p>");
                     }
                 }

@@ -60,7 +60,7 @@ public class PlayerTest {
     @Test
     public void testMove_southDirection_positionIsRevealed(){
         player.move(Direction.SOUTH);
-        assertTrue("Checking position changed by.", player.getMap().getTile(player.getPosition()).isRevealed());
+        assertTrue("Checking position changed by.", player.isRevealed(player.getPosition()));
     }
 
     @Test
