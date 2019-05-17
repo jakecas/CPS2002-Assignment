@@ -26,7 +26,7 @@ public class Player {
         return map;
     }
 
-    public void move(Direction direction){
+    public Position move(Direction direction){
         Position temp = new Position(position.getX(), position.getY());
         switch (direction){
             case NORTH:
@@ -47,7 +47,7 @@ public class Player {
             position = temp;
             throw new PositionOutOfBoundsException(position.toString());
         }
-        revealTile(position);
+        return position;
     }
 
     // TO REMOVE

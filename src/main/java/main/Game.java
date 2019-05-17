@@ -42,18 +42,19 @@ public class Game {
 
         int teamSize = (int)Math.ceil(numOfPlayers/numOfTeams);
 
-        for(int j = 0; j < teams.length; j++){
-            String teamName = "Team" + (j+1);
-            teams[j] = new Team(teamName, teamList);
+        for(int i = 0; i < teams.length; i++){
+            String teamName = "Team" + (i+1);
+            teams[i] = new Team(teamName, teamList);
+            teamList.addTeam(teams[i]);
 
-            for (int i = j*teamSize; (i < (j+1)*teamSize && i < players.length); i++) {
+            for (int j = i*teamSize; (j < (i+1)*teamSize && j < players.length); j++) {
                 Position position;
                 do {
                     position = Position.randomPosition(map.getMapSize());
                 }while (map.getTileType(position) != TileType.GRASS);
 
-                players[i] = new Player(position, map);
-                teams[j].addPlayer(players[i]);
+                players[j] = new Player(position, map);
+                teams[i].addPlayer(players[i]);
             }
         }
     }
@@ -111,7 +112,7 @@ public class Game {
         return players;
     }
 
-    public static boolean menu(Player player, int playerNum){
+    public static boolean menu(String teamName, Player player, int playerNum){
         boolean valid = false;
         Scanner input = new Scanner(System.in);
         System.out.println("Player " + (playerNum+1) + "; Choose a direction:");
@@ -125,16 +126,16 @@ public class Game {
             valid = true;
             switch (choice) {
                 case 1:
-                    player.move(Direction.NORTH);
+                    teamList.revealTile(teamName, player.move(Direction.NORTH));
                     break;
                 case 2:
-                    player.move(Direction.SOUTH);
+                    teamList.revealTile(teamName, player.move(Direction.SOUTH));
                     break;
                 case 3:
-                    player.move(Direction.EAST);
+                    teamList.revealTile(teamName,player.move(Direction.EAST));
                     break;
                 case 4:
-                    player.move(Direction.WEST);
+                    teamList.revealTile(teamName,player.move(Direction.WEST));
                     break;
                 default:
                     System.out.println("Invalid direction for Player " + (playerNum + 1) + ", please try again.");
@@ -167,22 +168,30 @@ public class Game {
         boolean win = false;
         boolean[] winners = new boolean[playerCount];
 
-        do {
-            for(int i = 0; i < playerCount; i++){
-                Player player = players[i];
-                boolean valid = false;
-                while(!valid){
-                    valid = menu(player, i);
-                }
+        int teamSize = (int)Math.ceil(playerCount/numOfTeams);
 
-                if(map.getTileType(player.getPosition()) == TileType.TREASURE){
-                    win = true;
-                    winners[i] = true;
-                } else if (map.getTileType(player.getPosition()) == TileType.WATER){
-                    System.out.println("objects.Player " + (i+1) + " drowned!");
-                    player.resetToInitialPosition();
+        do {
+            for(int i = 0; i < teams.length; i++) {
+                for (int j = 0; j < teams[i].getTeamSize(); j++) {
+                    Player player = teams[i].getPlayer(j);
+                    boolean valid = false;
+                    // i.e: team 2 player 1 with 5 player teams = 6
+                    // Change to Team X Player X for display?
+                    int globalPlayerNum = teams[0].getTeamSize()*i + j;
+                    while (!valid) {
+                        valid = menu(teams[i].getTeamName(), player, globalPlayerNum);
+                    }
+
+                    if (map.getTileType(player.getPosition()) == TileType.TREASURE) {
+                        win = true;
+                        winners[i] = true;
+                    } else if (map.getTileType(player.getPosition()) == TileType.WATER) {
+                        System.out.println("objects.Player " + (i + 1) + " drowned!");
+                        player.resetToInitialPosition();
+                    }
                 }
             }
+            teamList.endTurn(); // Notify observers of all changes
             turns++;
             generateHTMLFiles();
         } while(!win);
