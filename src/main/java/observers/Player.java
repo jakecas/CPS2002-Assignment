@@ -3,18 +3,13 @@ package observers;
 import enums.Direction;
 import exceptions.PositionOutOfBoundsException;
 import objects.Position;
-import objects.Tile;
 import objects.maps.Map;
 import observables.Team;
-
-import java.util.Collection;
-import java.util.LinkedList;
 
 public class Player implements Observer{
     private final Position initialPosition;
     private Position position;
     private Map map;
-    private Collection<Tile> revealedTiles;
     private Team team;
     private String html;
 
@@ -23,9 +18,6 @@ public class Player implements Observer{
         this.position = position;
         this.map = map;
         this.team = team;
-        this.revealedTiles = new LinkedList<>();
-
-        revealTile(initialPosition);
 
         team.register(this);
     }
@@ -58,22 +50,6 @@ public class Player implements Observer{
         return position;
     }
 
-    // TO REMOVE
-    public void revealTile(Position position){
-        Tile tile = map.getTile(position);
-        if(!revealedTiles.contains(tile)) {
-            this.revealedTiles.add(tile);
-        }
-    }
-
-    public boolean isRevealed(Position position){
-        return isRevealed(map.getTile(position));
-    }
-
-    public boolean isRevealed(Tile tile){
-        return revealedTiles.contains(tile);
-    }
-
     public void setPosition(Position position) {
         if(!position.isWithinLimit(0, map.getMapSize())){
             throw new PositionOutOfBoundsException(position.toString());
@@ -99,6 +75,6 @@ public class Player implements Observer{
 
     @Override
     public void update(){
-        html = map.generateHTML(this); // Pass Team and current position
+        html = map.generateHTML(team, position);
     }
 }

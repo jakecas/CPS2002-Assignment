@@ -20,6 +20,14 @@ public class Team implements Observable{
         this.map = map;
     }
 
+    public boolean isRevealed(Position position){
+        return isRevealed(map.getTile(position));
+    }
+
+    public boolean isRevealed(Tile tile){
+        return revealedTiles.contains(tile);
+    }
+
     public void revealTile(Position position){
         Tile tile = map.getTile(position);
         if(!revealedTiles.contains(tile)) {
@@ -42,7 +50,7 @@ public class Team implements Observable{
 
     @Override
     public void unregister(Observer observer) {
-        observers.add(observer);
+        observers.remove(observer);
     }
 
     @Override

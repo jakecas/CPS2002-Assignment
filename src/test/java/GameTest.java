@@ -1,5 +1,6 @@
 import main.Game;
 import objects.maps.Map;
+import observables.Team;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +18,7 @@ public class GameTest {
 
     @Before
     public void setUp(){
-        Game.startGame(4, 5);
+        Game.startGame(4, 2, 5);
     }
 
     @After
@@ -53,7 +54,7 @@ public class GameTest {
 
     @Test
     public void testHTMLGeneration_correctNumberOfFiles(){
-        Game.startGame(2, 5);
+        Game.startGame(2, 0, 5);
         Game.generateHTMLFiles();
         int numOfFiles = new File(Paths.get("Player_Files").toString()).list().length;
         numOfFiles--; //One of the files is a CSS file
@@ -62,7 +63,7 @@ public class GameTest {
 
     @Test
     public void testHTMLGeneration_bigMap_correctNumberOfFiles(){
-        Game.startGame(2, 40);
+        Game.startGame(2,0, 40);
         Game.generateHTMLFiles();
         int numOfFiles = new File(Paths.get("Player_Files").toString()).list().length;
         numOfFiles--; //One of the files is a CSS file
@@ -71,74 +72,88 @@ public class GameTest {
 
     @Test
     public void testMenu_inputCharacter_returnsFalse(){
-        Game.startGame(2, 5);
+        Game.startGame(2, 0,5);
         Player[] players = Game.getPlayers();
+        Team[] teams = Game.getTeams();
         ByteArrayInputStream in = new ByteArrayInputStream("f".getBytes());
         System.setIn(in);
-        assertFalse("Testing that the menu doesn't accept a character", Game.menu(players[0], 0));
+        assertFalse("Testing that the menu doesn't accept a character",
+                Game.menu(teams[0], players[0], 0));
         System.setIn(System.in);
     }
 
     @Test
     public void testMenu_inputIntegerOutOfLimits_returnFalse(){
-        Game.startGame(2, 5);
+        Game.startGame(2,0, 5);
         Player[] players = Game.getPlayers();
+        Team[] teams = Game.getTeams();
         ByteArrayInputStream in = new ByteArrayInputStream("5".getBytes());
         System.setIn(in);
-        assertFalse("Testing that the menu doesn't accept an integer outside its range", Game.menu(players[0], 0));
+        assertFalse("Testing that the menu doesn't accept an integer outside its range",
+                Game.menu(teams[0], players[0], 0));
         System.setIn(System.in);
     }
 
     @Test
     public void testMenu_inputIntegerWithinLimits_outOfBoundsMove_returnsFalse(){
-        Game.startGame(2, 5);
+        Game.startGame(2,0, 5);
         Player[] players = Game.getPlayers();
+        Team[] teams = Game.getTeams();
         players[0].setPosition(new Position(4, 4)); //Set position to bottom-right of map
         ByteArrayInputStream in = new ByteArrayInputStream("2".getBytes()); //Move South
         System.setIn(in);
-        assertFalse("Testing that the menu accepts integer in range of an invalid move", Game.menu(players[0], 0));
+        assertFalse("Testing that the menu accepts integer in range of an invalid move",
+                Game.menu(teams[0], players[0], 0));
         System.setIn(System.in);
     }
 
     @Test
     public void testMenu_input1_withinBoundsMove_returnsTrue(){
-        Game.startGame(2, 5);
+        Game.startGame(2,0, 5);
         Player[] players = Game.getPlayers();
+        Team[] teams = Game.getTeams();
         players[0].setPosition(new Position(2, 2)); //Set position to middle of map
         ByteArrayInputStream in = new ByteArrayInputStream("1".getBytes()); //Move North
         System.setIn(in);
-        assertTrue("Testing that the menu accepts 1 as a valid option", Game.menu(players[0], 0));
+        assertTrue("Testing that the menu accepts 1 as a valid option",
+                Game.menu(teams[0], players[0], 0));
         System.setIn(System.in);
     }
 
     @Test
     public void testMenu_input2_withinBoundsMove_returnsTrue(){
-        Game.startGame(2, 5);
+        Game.startGame(2, 0,5);
         Player[] players = Game.getPlayers();
+        Team[] teams = Game.getTeams();
         players[0].setPosition(new Position(2, 2)); //Set position to middle of map
         ByteArrayInputStream in = new ByteArrayInputStream("2".getBytes()); //Move South
         System.setIn(in);
-        assertTrue("Testing that the menu accepts 2 as a valid option", Game.menu(players[0], 0));
+        assertTrue("Testing that the menu accepts 2 as a valid option",
+                Game.menu(teams[0], players[0], 0));
     }
 
     @Test
     public void testMenu_input3_withinBoundsMove_returnsTrue(){
-        Game.startGame(2, 5);
+        Game.startGame(2,0, 5);
         Player[] players = Game.getPlayers();
+        Team[] teams = Game.getTeams();
         players[0].setPosition(new Position(2, 2)); //Set position to middle of map
         ByteArrayInputStream in = new ByteArrayInputStream("3".getBytes()); //Move South
         System.setIn(in);
-        assertTrue("Testing that the menu accepts 3 as a valid option", Game.menu(players[0], 0));
+        assertTrue("Testing that the menu accepts 3 as a valid option",
+                Game.menu(teams[0], players[0], 0));
     }
 
     @Test
     public void testMenu_input4_withinBoundsMove_returnsTrue(){
-        Game.startGame(2, 5);
+        Game.startGame(2, 0,5);
         Player[] players = Game.getPlayers();
+        Team[] teams = Game.getTeams();
         players[0].setPosition(new Position(2, 2)); //Set position to middle of map
         ByteArrayInputStream in = new ByteArrayInputStream("4".getBytes()); //Move South
         System.setIn(in);
-        assertTrue("Testing that the menu accepts 4 as a valid option", Game.menu(players[0], 0));
+        assertTrue("Testing that the menu accepts 4 as a valid option",
+                Game.menu(teams[0], players[0], 0));
     }
 
 }

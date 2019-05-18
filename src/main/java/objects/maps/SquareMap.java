@@ -6,7 +6,7 @@ import main.Game;
 import enums.TileType;
 import exceptions.HTMLGenerationException;
 import exceptions.PositionOutOfBoundsException;
-import observers.Player;
+import observables.Team;
 
 import java.io.*;
 import java.net.URL;
@@ -117,15 +117,11 @@ public abstract class SquareMap implements Map{
         return seed;
     }
 
-    public char[][] getSeed(){
-        return seed;
-    }
-
     public TileType getTileType(Position position){
         return getTile(position).getTileType();
     }
 
-    public String generateHTML(Player player){
+    public String generateHTML(Team team, Position playerPosition){
         StringBuilder mapHTML = new StringBuilder();
 
         URL resource = Game.class.getClassLoader().getResource("map_prototype.html");
@@ -159,15 +155,15 @@ public abstract class SquareMap implements Map{
 
             for (int col = 0; col < getMapSize(); col++) {
                 // Output as (column, row) to match (x, y) convention
-                boolean isRevealed = player.isRevealed(tiles[col][row]);
+                boolean isRevealed = team.isRevealed(tiles[col][row]);
                 tilesHTML.append(tiles[col][row].toHTML(isRevealed));
                 tilesHTML.append( "\">");
                 tilesHTML.append(col);
                 tilesHTML.append(",");
                 tilesHTML.append(row);
 
-                if (col == player.getPosition().getX()){
-                    if (row == player.getPosition().getY()) {
+                if (col == playerPosition.getX()){
+                    if (row == playerPosition.getY()) {
                         tilesHTML.append("<p>P%pnum<p>");
                     }
                 }

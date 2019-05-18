@@ -4,6 +4,7 @@ import objects.maps.Map;
 import enums.Direction;
 import exceptions.PositionOutOfBoundsException;
 import factories.MapCreator;
+import observables.Team;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +17,7 @@ public class PlayerTest {
     Position position;
     Map map;
     Player player;
+    Team team;
 
     @Before
     public void setUp() {
@@ -24,7 +26,8 @@ public class PlayerTest {
         map = mapCreator.createMap(MapType.SQUARE, Difficulty.SAFE, 5);
         map.setMapSize(5);
         map.generate(map.generateSeed());
-        player = new Player(position, map);
+        team = new Team(map);
+        player = new Player(position, map, team);
     }
 
     @After
@@ -59,8 +62,8 @@ public class PlayerTest {
 
     @Test
     public void testMove_southDirection_positionIsRevealed(){
-        player.move(Direction.SOUTH);
-        assertTrue("Checking position changed by.", player.isRevealed(player.getPosition()));
+        team.revealTile(player.move(Direction.SOUTH));
+        assertTrue("Checking position changed by.", team.isRevealed(player.getPosition()));
     }
 
     @Test

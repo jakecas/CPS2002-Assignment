@@ -36,6 +36,11 @@ public class Game {
 
         setNumPlayers(numOfPlayers);
 
+        // Co-op off
+        if(numOfTeams < 2 || numOfTeams > numOfPlayers){
+            numOfTeams = numOfPlayers;
+        }
+
         teams = new Team[numOfTeams];
 
         int teamSize = (int)Math.ceil(numOfPlayers/numOfTeams);
@@ -50,7 +55,9 @@ public class Game {
                 }while (map.getTileType(position) != TileType.GRASS);
 
                 players[j] = new Player(position, map, teams[i]);
+                teams[i].revealTile(position); // Reveal initial position
             }
+            teams[i].endTurn(); // Notify observers of all changes
         }
     }
 
@@ -107,6 +114,10 @@ public class Game {
         return players;
     }
 
+    public static Team[] getTeams(){
+        return teams;
+    }
+
     public static boolean menu(Team team, Player player, int playerNum){
         boolean valid = false;
         Scanner input = new Scanner(System.in);
@@ -152,7 +163,7 @@ public class Game {
 
         System.out.println("How many players? (2-8 players)");
         int playerCount = input.nextInt();
-        System.out.println("How many teams?");
+        System.out.println("How many teams? (Enter a number less than 2 to turn teams off)");
         int numOfTeams = input.nextInt();
         System.out.println("How large is the map? (5-50 for 2-4 players, 8-50 for 5-8 players)");
         int mapSize = input.nextInt();
@@ -162,8 +173,6 @@ public class Game {
 
         boolean win = false;
         boolean[] winners = new boolean[playerCount];
-
-        int teamSize = (int)Math.ceil(playerCount/numOfTeams);
 
         do {
             for(int i = 0; i < teams.length; i++) {
@@ -178,9 +187,11 @@ public class Game {
 
                     if (map.getTileType(player.getPosition()) == TileType.TREASURE) {
                         win = true;
-                        winners[i] = true;
+                        for(int k = previousTeamUpper; k < (previousTeamUpper + teams[i].getTeamSize()); k++){
+                            winners[k] = true; // Whole team wins
+                        }
                     } else if (map.getTileType(player.getPosition()) == TileType.WATER) {
-                        System.out.println("Player " + (i + 1) + " drowned!");
+                        System.out.println("Player " + (j + 1) + " drowned!");
                         player.resetToInitialPosition();
                     }
                 }
