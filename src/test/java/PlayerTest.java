@@ -1,15 +1,15 @@
-import enums.Difficulty;
-import enums.MapType;
-import objects.maps.Map;
-import enums.Direction;
-import exceptions.PositionOutOfBoundsException;
-import factories.MapCreator;
-import observables.Team;
+import assignment.enums.Difficulty;
+import assignment.enums.MapType;
+import assignment.objects.maps.Map;
+import assignment.enums.Direction;
+import assignment.exceptions.PositionOutOfBoundsException;
+import assignment.factories.MapCreator;
+import assignment.observables.Team;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import observers.Player;
-import objects.Position;
+import assignment.observers.Player;
+import assignment.objects.Position;
 
 import static org.junit.Assert.*;
 

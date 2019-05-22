@@ -1,11 +1,11 @@
-import main.Game;
-import objects.maps.Map;
-import observables.Team;
+import assignment.main.Game;
+import assignment.objects.maps.Map;
+import assignment.observables.Team;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import observers.Player;
-import objects.Position;
+import assignment.observers.Player;
+import assignment.objects.Position;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -63,7 +63,7 @@ public class GameTest {
 
     @Test
     public void testHTMLGeneration_bigMap_correctNumberOfFiles(){
-        Game.startGame(2,0, 40);
+        Game.startGame(2, 0, 40);
         Game.generateHTMLFiles();
         int numOfFiles = new File(Paths.get("Player_Files").toString()).list().length;
         numOfFiles--; //One of the files is a CSS file
@@ -84,7 +84,7 @@ public class GameTest {
 
     @Test
     public void testMenu_inputIntegerOutOfLimits_returnFalse(){
-        Game.startGame(2,0, 5);
+        Game.startGame(2, 0, 5);
         Player[] players = Game.getPlayers();
         Team[] teams = Game.getTeams();
         ByteArrayInputStream in = new ByteArrayInputStream("5".getBytes());
@@ -96,7 +96,7 @@ public class GameTest {
 
     @Test
     public void testMenu_inputIntegerWithinLimits_outOfBoundsMove_returnsFalse(){
-        Game.startGame(2,0, 5);
+        Game.startGame(2, 0, 5);
         Player[] players = Game.getPlayers();
         Team[] teams = Game.getTeams();
         players[0].setPosition(new Position(4, 4)); //Set position to bottom-right of map
@@ -109,7 +109,7 @@ public class GameTest {
 
     @Test
     public void testMenu_input1_withinBoundsMove_returnsTrue(){
-        Game.startGame(2,0, 5);
+        Game.startGame(2, 0, 5);
         Player[] players = Game.getPlayers();
         Team[] teams = Game.getTeams();
         players[0].setPosition(new Position(2, 2)); //Set position to middle of map
@@ -134,7 +134,7 @@ public class GameTest {
 
     @Test
     public void testMenu_input3_withinBoundsMove_returnsTrue(){
-        Game.startGame(2,0, 5);
+        Game.startGame(2, 0, 5);
         Player[] players = Game.getPlayers();
         Team[] teams = Game.getTeams();
         players[0].setPosition(new Position(2, 2)); //Set position to middle of map

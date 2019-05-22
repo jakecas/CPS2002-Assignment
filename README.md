@@ -24,7 +24,7 @@ This branch was used to write the code that would create an HTML file for each p
 This branch was used to create the basic game loop and logic for the user to play. 
 Moreover, previously failing tests were now a success due to the added logic.
 
-### Bugfix objects.maps.Map Generation
+### Bugfix assignment.objects.maps.Map Generation
 This branch was created to solve an issue with the map as each player had the same map object. 
 This was resolved by generating a seed.
 
@@ -45,7 +45,7 @@ Element | Class | Method    | Line
 Total   | 90%   | 94%       | 86%
 
 The class which could not be covered was the HTMLGeneration exception, which only occurs when an IOException is thrown and thus could not be triggered during tests.
-The methods are the cconstructor of this exception, and the main method which would start the game if used.
+The methods are the cconstructor of this exception, and the assignment.main method which would start the game if used.
 The lines not covered are thus for the same reasons.
 
 ## Features for part 3 of the assignment

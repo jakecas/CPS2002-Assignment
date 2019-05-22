@@ -1,10 +1,10 @@
-import enums.Difficulty;
-import enums.MapType;
-import exceptions.PositionOutOfBoundsException;
-import factories.MapCreator;
-import objects.Position;
-import objects.Tile;
-import objects.maps.Map;
+import assignment.enums.Difficulty;
+import assignment.enums.MapType;
+import assignment.exceptions.PositionOutOfBoundsException;
+import assignment.factories.MapCreator;
+import assignment.objects.Position;
+import assignment.objects.Tile;
+import assignment.objects.maps.Map;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

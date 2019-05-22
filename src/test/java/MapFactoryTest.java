@@ -1,14 +1,14 @@
-import enums.Difficulty;
-import enums.MapType;
-import enums.TileType;
-import factories.*;
-import objects.maps.HazardousSquareMap;
-import objects.maps.Map;
-import objects.maps.SafeSquareMap;
+import assignment.enums.Difficulty;
+import assignment.enums.MapType;
+import assignment.enums.TileType;
+import assignment.factories.*;
+import assignment.objects.maps.HazardousSquareMap;
+import assignment.objects.maps.Map;
+import assignment.objects.maps.SafeSquareMap;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import objects.Position;
+import assignment.objects.Position;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.*;
