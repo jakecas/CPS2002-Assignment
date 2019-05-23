@@ -75,7 +75,7 @@ public class Player implements Observer{
 
     @Override
     public void update(){
-        html = map.generateHTML(team, position);
+        html = map.generateHTML(this);
     }
 
     public Team getTeam(){
