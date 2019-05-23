@@ -1,3 +1,5 @@
+package assignment;
+
 import org.junit.Before;
 import org.junit.Test;
 import assignment.objects.Position;

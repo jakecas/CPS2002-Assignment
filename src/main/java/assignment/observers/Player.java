@@ -26,7 +26,7 @@ public class Player implements Observer{
         return map;
     }
 
-    public Position move(Direction direction){
+    public void move(Direction direction){
         Position temp = new Position(position.getX(), position.getY());
         switch (direction){
             case NORTH:
@@ -47,7 +47,7 @@ public class Player implements Observer{
             position = temp;
             throw new PositionOutOfBoundsException(position.toString());
         }
-        return position;
+        team.revealTile(position);
     }
 
     public void setPosition(Position position) {
@@ -76,5 +76,9 @@ public class Player implements Observer{
     @Override
     public void update(){
         html = map.generateHTML(team, position);
+    }
+
+    public Team getTeam(){
+        return team;
     }
 }

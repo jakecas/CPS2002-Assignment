@@ -1,3 +1,5 @@
+package assignment;
+
 import assignment.main.Game;
 import assignment.objects.maps.Map;
 import assignment.observables.Team;
@@ -72,7 +74,7 @@ public class GameTest {
 
     @Test
     public void testMenu_inputCharacter_returnsFalse(){
-        Game.startGame(2, 0,5);
+        Game.startGame(2, 0, 5);
         Player[] players = Game.getPlayers();
         Team[] teams = Game.getTeams();
         ByteArrayInputStream in = new ByteArrayInputStream("f".getBytes());
@@ -122,7 +124,7 @@ public class GameTest {
 
     @Test
     public void testMenu_input2_withinBoundsMove_returnsTrue(){
-        Game.startGame(2, 0,5);
+        Game.startGame(2, 0, 5);
         Player[] players = Game.getPlayers();
         Team[] teams = Game.getTeams();
         players[0].setPosition(new Position(2, 2)); //Set position to middle of map
@@ -146,7 +148,7 @@ public class GameTest {
 
     @Test
     public void testMenu_input4_withinBoundsMove_returnsTrue(){
-        Game.startGame(2, 0,5);
+        Game.startGame(2, 0, 5);
         Player[] players = Game.getPlayers();
         Team[] teams = Game.getTeams();
         players[0].setPosition(new Position(2, 2)); //Set position to middle of map

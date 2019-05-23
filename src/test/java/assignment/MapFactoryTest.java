@@ -1,3 +1,5 @@
+package assignment;
+
 import assignment.enums.Difficulty;
 import assignment.enums.MapType;
 import assignment.enums.TileType;

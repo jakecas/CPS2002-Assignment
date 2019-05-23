@@ -132,16 +132,16 @@ public class Game {
             valid = true;
             switch (choice) {
                 case 1:
-                    team.revealTile(player.move(Direction.NORTH));
+                    player.move(Direction.NORTH);
                     break;
                 case 2:
-                    team.revealTile(player.move(Direction.SOUTH));
+                    player.move(Direction.SOUTH);
                     break;
                 case 3:
-                    team.revealTile(player.move(Direction.EAST));
+                    player.move(Direction.EAST);
                     break;
                 case 4:
-                    team.revealTile(player.move(Direction.WEST));
+                    player.move(Direction.WEST);
                     break;
                 default:
                     System.out.println("Invalid direction for Player " + (playerNum + 1) + ", please try again.");

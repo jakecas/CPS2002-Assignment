@@ -1,3 +1,5 @@
+package assignment;
+
 import assignment.enums.Difficulty;
 import assignment.enums.MapType;
 import assignment.objects.maps.Map;
@@ -62,7 +64,7 @@ public class PlayerTest {
 
     @Test
     public void testMove_southDirection_positionIsRevealed(){
-        team.revealTile(player.move(Direction.SOUTH));
+        player.move(Direction.SOUTH);
         assertTrue("Checking position changed by.", team.isRevealed(player.getPosition()));
     }
 

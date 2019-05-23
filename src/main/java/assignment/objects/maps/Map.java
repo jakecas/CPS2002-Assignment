@@ -1,16 +1,16 @@
 package assignment.objects.maps;
 
 import assignment.enums.TileType;
-import assignment.observables.Team;
 import assignment.objects.Position;
 import assignment.objects.Tile;
+import assignment.observers.Player;
 
 
 public interface Map {
 
     void generate(char[][] seed);
     char[][] generateSeed();
-    String generateHTML(Team team, Position position);
+    String generateHTML(Player player);
 
     boolean setMapSize(int size);
     void setIsLarge(boolean isLarge);
