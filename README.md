@@ -52,3 +52,18 @@ The lines not covered are thus for the same reasons.
 
 ### Task 1: Map Factory
 This branch was created to fulfill the requirements for task 1 using the factory design pattern.
+
+### Task 2: Convert Map to Singleton
+This task was completed by converting the SafeSquareMap and HazardousSquareMap object to the singleton design pattern. 
+
+### Task 3: Team Observable
+To implement the team functionality, it was decided to follow the Observer design pattern with the team as the observable and the players as observers.
+
+## Final Coverage
+
+Element | Class | Method    | Line 
+---     | ---   | ---       | --- 
+Total   | 90%   | 96%       | 86%
+
+Again, the coverage missed in the previous part was not improved upon, however another issue regarding the MapSizeUndefinedException occurred.
+This test had to be removed since it was failing when run after the singleton map was created, since it depended on a clean map object.
