@@ -55,7 +55,6 @@ public class Game {
                 }while (map.getTileType(position) != TileType.GRASS);
 
                 players[j] = new Player(position, map, teams[i]);
-                teams[i].revealTile(position); // Reveal initial position
             }
             teams[i].endTurn(); // Notify assignment.observers of all changes
         }

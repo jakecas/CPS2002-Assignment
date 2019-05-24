@@ -20,6 +20,7 @@ public class Player implements Observer{
         this.team = team;
 
         team.register(this);
+        team.revealTile(position); // Reveal initial position
     }
 
     public Map getMap(){

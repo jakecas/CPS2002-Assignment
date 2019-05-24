@@ -37,6 +37,11 @@ public class PlayerTest {
         player = null;
     }
 
+    @Test
+    public void testGetMap_returnsMap(){
+        assertEquals("Testing that getMap returns map passed in constructor.", map, player.getMap());
+    }
+
     @Test(expected = PositionOutOfBoundsException.class)
     public void testSetPosition_negativePosition_throwsException() {
         player.setPosition(new Position(-1,-1));
