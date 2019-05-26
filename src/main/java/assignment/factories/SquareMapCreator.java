@@ -11,8 +11,7 @@ public class SquareMapCreator extends MapCreator {
                 return new SafeSquareMapCreator().createSafeSquareMap(mapSize);
             case HAZARDOUS:
                 return new HazardousSquareMapCreator().createHazardousSquareMap(mapSize);
-            default:
-                return null; // Throw an exception
         }
+        return null;
     }
 }

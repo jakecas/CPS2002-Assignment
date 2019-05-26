@@ -45,6 +45,18 @@ public class MapFactoryTest {
                 (waterPercent(hazardousMap) >= 0.25) && (waterPercent(hazardousMap) <= 0.35));
     }
 
+    @Test
+    public void testGenerate_nullMapType_returnsNull(){
+        Map temp = mapCreator.createMap(null, Difficulty.SAFE, 5);
+        assertNull("Testing createMap returns null with null MapType", temp);
+    }
+
+    @Test
+    public void testGenerate_nullDifficulty_returnsNull(){
+        Map temp = mapCreator.createMap(MapType.SQUARE, null, 5);
+        assertNull("Testing createMap returns null with null difficulty", temp);
+    }
+
     private double waterPercent(Map map){
         int waterTiles = 0;
         for(int i = 0; i < map.getMapSize(); i++){
