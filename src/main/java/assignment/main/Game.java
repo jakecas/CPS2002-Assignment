@@ -26,13 +26,17 @@ public class Game {
     private static Map map;
     private static Team[] teams;
 
-    public static void startGame(int numOfPlayers, int numOfTeams, int mapSize){
+    public static void startGame(int numOfPlayers, int numOfTeams, int mapSize, boolean hazardous){
 
         turns = 0;
 
         MapCreator mapCreator = new MapCreator();
 
-        map = mapCreator.createMap(MapType.SQUARE, Difficulty.SAFE, mapSize);
+        if(hazardous) {
+            map = mapCreator.createMap(MapType.SQUARE, Difficulty.HAZARDOUS, mapSize);
+        } else{
+            map = mapCreator.createMap(MapType.SQUARE, Difficulty.SAFE, mapSize);
+        }
 
         setNumPlayers(numOfPlayers);
 
@@ -166,8 +170,10 @@ public class Game {
         int numOfTeams = input.nextInt();
         System.out.println("How large is the map? (5-50 for 2-4 players, 8-50 for 5-8 players)");
         int mapSize = input.nextInt();
+        System.out.println("How dangerous should the map be? (0 for safe, 1 for hazardous)");
+        int danger = input.nextInt();
 
-        startGame(playerCount, numOfTeams, mapSize);
+        startGame(playerCount, numOfTeams, mapSize, danger==1);
         generateHTMLFiles();
 
         boolean win = false;

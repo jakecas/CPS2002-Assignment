@@ -1,6 +1,7 @@
 package assignment;
 
 import assignment.main.Game;
+import assignment.objects.maps.HazardousSquareMap;
 import assignment.objects.maps.Map;
 import assignment.observables.Team;
 import org.junit.After;
@@ -20,7 +21,7 @@ public class GameTest {
 
     @Before
     public void setUp(){
-        Game.startGame(4, 2, 5);
+        Game.startGame(4, 2, 5, false);
     }
 
     @After
@@ -55,8 +56,16 @@ public class GameTest {
     }
 
     @Test
+    public void testStartGame_hazardousMap_mapIsHazardousType(){
+        Game.startGame(4, 2, 5, true);
+        Map map = Game.getMap();
+        assertTrue("Testing that map is of type HazardousSquareMap", map instanceof HazardousSquareMap);
+    }
+
+
+    @Test
     public void testHTMLGeneration_correctNumberOfFiles(){
-        Game.startGame(2, 0, 5);
+        Game.startGame(2, 0, 5, false);
         Game.generateHTMLFiles();
         int numOfFiles = new File(Paths.get("Player_Files").toString()).list().length;
         numOfFiles--; //One of the files is a CSS file
@@ -65,7 +74,7 @@ public class GameTest {
 
     @Test
     public void testHTMLGeneration_bigMap_correctNumberOfFiles(){
-        Game.startGame(2, 0, 40);
+        Game.startGame(2, 0, 40, false);
         Game.generateHTMLFiles();
         int numOfFiles = new File(Paths.get("Player_Files").toString()).list().length;
         numOfFiles--; //One of the files is a CSS file
@@ -74,7 +83,7 @@ public class GameTest {
 
     @Test
     public void testMenu_inputCharacter_returnsFalse(){
-        Game.startGame(2, 0, 5);
+        Game.startGame(2, 0, 5, false);
         Player[] players = Game.getPlayers();
         Team[] teams = Game.getTeams();
         ByteArrayInputStream in = new ByteArrayInputStream("f".getBytes());
@@ -86,7 +95,7 @@ public class GameTest {
 
     @Test
     public void testMenu_inputIntegerOutOfLimits_returnFalse(){
-        Game.startGame(2, 0, 5);
+        Game.startGame(2, 0, 5, false);
         Player[] players = Game.getPlayers();
         Team[] teams = Game.getTeams();
         ByteArrayInputStream in = new ByteArrayInputStream("5".getBytes());
@@ -98,7 +107,7 @@ public class GameTest {
 
     @Test
     public void testMenu_inputIntegerWithinLimits_outOfBoundsMove_returnsFalse(){
-        Game.startGame(2, 0, 5);
+        Game.startGame(2, 0, 5, false);
         Player[] players = Game.getPlayers();
         Team[] teams = Game.getTeams();
         players[0].setPosition(new Position(4, 4)); //Set position to bottom-right of map
@@ -111,7 +120,7 @@ public class GameTest {
 
     @Test
     public void testMenu_input1_withinBoundsMove_returnsTrue(){
-        Game.startGame(2, 0, 5);
+        Game.startGame(2, 0, 5, false);
         Player[] players = Game.getPlayers();
         Team[] teams = Game.getTeams();
         players[0].setPosition(new Position(2, 2)); //Set position to middle of map
@@ -124,7 +133,7 @@ public class GameTest {
 
     @Test
     public void testMenu_input2_withinBoundsMove_returnsTrue(){
-        Game.startGame(2, 0, 5);
+        Game.startGame(2, 0, 5, false);
         Player[] players = Game.getPlayers();
         Team[] teams = Game.getTeams();
         players[0].setPosition(new Position(2, 2)); //Set position to middle of map
@@ -136,7 +145,7 @@ public class GameTest {
 
     @Test
     public void testMenu_input3_withinBoundsMove_returnsTrue(){
-        Game.startGame(2, 0, 5);
+        Game.startGame(2, 0, 5, false);
         Player[] players = Game.getPlayers();
         Team[] teams = Game.getTeams();
         players[0].setPosition(new Position(2, 2)); //Set position to middle of map
@@ -148,7 +157,7 @@ public class GameTest {
 
     @Test
     public void testMenu_input4_withinBoundsMove_returnsTrue(){
-        Game.startGame(2, 0, 5);
+        Game.startGame(2, 0, 5, false);
         Player[] players = Game.getPlayers();
         Team[] teams = Game.getTeams();
         players[0].setPosition(new Position(2, 2)); //Set position to middle of map

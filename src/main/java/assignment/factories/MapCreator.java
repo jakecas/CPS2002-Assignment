@@ -7,12 +7,14 @@ import assignment.objects.maps.Map;
 public class MapCreator {
 
     public Map createMap(MapType mapType, Difficulty difficulty, int mapSize){
+        if(mapType==null || difficulty==null){
+            return null;
+        }
         switch (mapType){
             case SQUARE:
                 return new SquareMapCreator().createSquareMap(difficulty, mapSize);
-            default:
-                return null; // Throw an exception
         }
+        return null;
     }
 
 }

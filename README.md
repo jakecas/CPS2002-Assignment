@@ -63,7 +63,7 @@ To implement the team functionality, it was decided to follow the Observer desig
 
 Element | Class | Method    | Line 
 ---     | ---   | ---       | --- 
-Total   | 90%   | 96%       | 86%
+Total   | 90%   | 96%       | 85%
 
 Again, the coverage missed in the previous part was not improved upon, however another issue regarding the MapSizeUndefinedException occurred.
 This test had to be removed since it was failing when run after the singleton map was created, since it depended on a clean map object.

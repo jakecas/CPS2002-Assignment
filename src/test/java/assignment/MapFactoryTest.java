@@ -46,15 +46,15 @@ public class MapFactoryTest {
     }
 
     @Test
-    public void testCreateMap_safeSquareMap_isOfTypeSafeSquareMap(){
-        SafeSquareMap safeSquareMap = SafeSquareMap.getInstance();
-        assertThat("Testing if the new map object is of type SafeSquareMap", safeSquareMap, instanceOf(safeMap.getClass()));
+    public void testGenerate_nullMapType_returnsNull(){
+        Map temp = mapCreator.createMap(null, Difficulty.SAFE, 5);
+        assertNull("Testing createMap returns null with null MapType", temp);
     }
 
     @Test
-    public void testCreateMap_hazardousSquareMap_isOfTypeHazardousSquareMap(){
-        HazardousSquareMap hazardousSquareMap = HazardousSquareMap.getInstance();
-        assertThat("Testing if the new map object is of type HazardousSquareMap", hazardousSquareMap, instanceOf(hazardousMap.getClass()));
+    public void testGenerate_nullDifficulty_returnsNull(){
+        Map temp = mapCreator.createMap(MapType.SQUARE, null, 5);
+        assertNull("Testing createMap returns null with null difficulty", temp);
     }
 
     private double waterPercent(Map map){
