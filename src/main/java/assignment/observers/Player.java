@@ -71,7 +71,7 @@ public class Player implements Observer{
     }
 
     public void resetToInitialPosition() {
-        position = initialPosition;
+        position = new Position(initialPosition.getX(), initialPosition.getY());
     }
 
     @Override
