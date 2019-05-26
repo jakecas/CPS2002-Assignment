@@ -45,18 +45,6 @@ public class MapFactoryTest {
                 (waterPercent(hazardousMap) >= 0.25) && (waterPercent(hazardousMap) <= 0.35));
     }
 
-    @Test
-    public void testCreateMap_safeSquareMap_isOfTypeSafeSquareMap(){
-        SafeSquareMap safeSquareMap = SafeSquareMap.getInstance();
-        assertThat("Testing if the new map object is of type SafeSquareMap", safeSquareMap, instanceOf(safeMap.getClass()));
-    }
-
-    @Test
-    public void testCreateMap_hazardousSquareMap_isOfTypeHazardousSquareMap(){
-        HazardousSquareMap hazardousSquareMap = HazardousSquareMap.getInstance();
-        assertThat("Testing if the new map object is of type HazardousSquareMap", hazardousSquareMap, instanceOf(hazardousMap.getClass()));
-    }
-
     private double waterPercent(Map map){
         int waterTiles = 0;
         for(int i = 0; i < map.getMapSize(); i++){
