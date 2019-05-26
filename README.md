@@ -24,7 +24,7 @@ This branch was used to write the code that would create an HTML file for each p
 This branch was used to create the basic game loop and logic for the user to play. 
 Moreover, previously failing tests were now a success due to the added logic.
 
-### Bugfix objects.maps.Map Generation
+### Bugfix assignment.objects.maps.Map Generation
 This branch was created to solve an issue with the map as each player had the same map object. 
 This was resolved by generating a seed.
 
@@ -45,10 +45,25 @@ Element | Class | Method    | Line
 Total   | 90%   | 94%       | 86%
 
 The class which could not be covered was the HTMLGeneration exception, which only occurs when an IOException is thrown and thus could not be triggered during tests.
-The methods are the cconstructor of this exception, and the main method which would start the game if used.
+The methods are the cconstructor of this exception, and the assignment.main method which would start the game if used.
 The lines not covered are thus for the same reasons.
 
 ## Features for part 3 of the assignment
 
 ### Task 1: Map Factory
 This branch was created to fulfill the requirements for task 1 using the factory design pattern.
+
+### Task 2: Convert Map to Singleton
+This task was completed by converting the SafeSquareMap and HazardousSquareMap object to the singleton design pattern. 
+
+### Task 3: Team Observable
+To implement the team functionality, it was decided to follow the Observer design pattern with the team as the observable and the players as observers.
+
+## Final Coverage
+
+Element | Class | Method    | Line 
+---     | ---   | ---       | --- 
+Total   | 90%   | 96%       | 86%
+
+Again, the coverage missed in the previous part was not improved upon, however another issue regarding the MapSizeUndefinedException occurred.
+This test had to be removed since it was failing when run after the singleton map was created, since it depended on a clean map object.
